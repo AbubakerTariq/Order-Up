@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
     [Space] [Header("Player settings")]
     [SerializeField] private float moveSpeed = 7.5f;
     [SerializeField] private float rotateSpeed = 5f;
+    [SerializeField] private float interactRange = 1f;
 
     [Space] [Header("Component references")]
     [SerializeField] private CharacterController playerController;
@@ -17,6 +18,12 @@ public class Player : MonoBehaviour
     private void Update()
     {
         HandleMovement();
+        HandleInteraction();
+
+        Vector3 startPoint = transform.position + Vector3.up * 1f; // Adjust Y offset
+        Vector3 direction = transform.forward;  
+
+        Debug.DrawLine(startPoint, startPoint + direction * interactRange, Color.green);
     }
 
     private void HandleMovement()
@@ -31,5 +38,18 @@ public class Player : MonoBehaviour
 
         // Move animation
         playerAnimator.SetBool(IsWalking, moveDir != Vector3.zero);
+    }
+
+    private void HandleInteraction()
+    {
+        Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, interactRange);
+        if (hit.collider != null)
+        {
+            Debug.Log("hit: " + hit.collider.name);
+        }
+        else
+        {
+            Debug.Log("hit nothing");
+        }
     }
 }
