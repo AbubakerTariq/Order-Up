@@ -12,17 +12,26 @@ public class Player : MonoBehaviour
     [SerializeField] private GameInput gameInput;
     [SerializeField] private Animator playerAnimator;
 
+    // Other variable
+    private Counter selectedCounter;
+
     // String constants
     private const string IsWalking = "IsWalking";
 
     private void Start()
     {
-        gameInput.OnInteract += () => HandleInteraction();
+        gameInput.OnInteract += () => OnInteractKeyPressed();
     }
 
     private void Update()
     {
         HandleMovement();
+        HandleInteraction();
+    }
+
+    private void OnInteractKeyPressed()
+    {
+        selectedCounter?.Interact();
     }
 
     private void HandleMovement()
@@ -41,14 +50,30 @@ public class Player : MonoBehaviour
 
     private void HandleInteraction()
     {
-        Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, interactRange);
-        if (hit.collider != null)
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, interactRange))
         {
-            Debug.Log("hit: " + hit.collider.name);
+            if (hit.transform.TryGetComponent(out Counter counter))
+            {
+                if (selectedCounter != counter)
+                {
+                    SetSelectedCounter(counter);
+                    selectedCounter.HighlightCounter();
+                }
+            }
+            else
+            {
+                SetSelectedCounter(null);
+            }
         }
         else
         {
-            Debug.Log("hit nothing");
+            SetSelectedCounter(null);
         }
+    }
+
+    private void SetSelectedCounter(Counter counter)
+    {
+        selectedCounter?.UnHighlightCounter();
+        selectedCounter = counter;
     }
 }

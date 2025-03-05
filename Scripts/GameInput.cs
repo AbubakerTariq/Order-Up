@@ -6,6 +6,7 @@ public class GameInput : MonoBehaviour
 {
     private PlayerInputActions playerInputActions;
     public UnityAction OnInteract;
+    
     private void Awake()
     {
         playerInputActions = new();
