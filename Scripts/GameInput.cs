@@ -6,6 +6,7 @@ public class GameInput : MonoBehaviour
 {
     private PlayerInputActions playerInputActions;
     public UnityAction OnInteract;
+    public UnityAction OnOperate;
     
     private void Awake()
     {
@@ -13,6 +14,7 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Enable();
 
         playerInputActions.Player.Interact.performed += (InputAction.CallbackContext context) => OnInteract?.Invoke();
+        playerInputActions.Player.Operate.performed += (InputAction.CallbackContext context) => OnOperate?.Invoke();
     }
     
     public Vector2 GetMovementVectorNormalized()

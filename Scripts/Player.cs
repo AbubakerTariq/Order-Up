@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IKitchenObjectParent
 {
     [Space] [Header("Player settings")]
     [SerializeField] private float moveSpeed = 7.5f;
@@ -12,6 +12,10 @@ public class Player : MonoBehaviour
     [SerializeField] private GameInput gameInput;
     [SerializeField] private Animator playerAnimator;
 
+    [Space] [Header("Kitchen object related")]
+    [SerializeField] private Transform kitchenObjectHoldPoint;
+    [SerializeField] private KitchenObject kitchenObject;
+
     // Other variable
     private Counter selectedCounter;
 
@@ -20,18 +24,13 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        gameInput.OnInteract += () => OnInteractKeyPressed();
+        gameInput.OnInteract += () => selectedCounter?.Interact(this);
     }
 
     private void Update()
     {
         HandleMovement();
         HandleInteraction();
-    }
-
-    private void OnInteractKeyPressed()
-    {
-        selectedCounter?.Interact();
     }
 
     private void HandleMovement()
@@ -75,5 +74,30 @@ public class Player : MonoBehaviour
     {
         selectedCounter?.UnHighlightCounter();
         selectedCounter = counter;
+    }
+
+    public Transform GetKitchenObjectHoldPoint()
+    {
+        return kitchenObjectHoldPoint;
+    }
+
+    public void SetKitchenObject(KitchenObject kitchenObject)
+    {
+        this.kitchenObject = kitchenObject;
+    }
+
+    public KitchenObject GetKitchenObject()
+    {
+        return kitchenObject;
+    }
+    
+    public void ClearKitchenObject()
+    {
+        kitchenObject = null;
+    }
+    
+    public bool HasKitchenObject()
+    {
+        return kitchenObject != null;
     }
 }
