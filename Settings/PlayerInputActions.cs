@@ -53,6 +53,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Stand Still"",
+                    ""type"": ""Button"",
+                    ""id"": ""53dd70f8-b869-4d07-bd62-bffeae298f3f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -187,6 +196,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Operate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed6843e5-15b8-4635-ae06-ce8d2897bc97"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stand Still"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -198,6 +218,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Operate = m_Player.FindAction("Operate", throwIfNotFound: true);
+        m_Player_StandStill = m_Player.FindAction("Stand Still", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -260,6 +281,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Operate;
+    private readonly InputAction m_Player_StandStill;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -267,6 +289,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Operate => m_Wrapper.m_Player_Operate;
+        public InputAction @StandStill => m_Wrapper.m_Player_StandStill;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -285,6 +308,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Operate.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOperate;
                 @Operate.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOperate;
                 @Operate.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOperate;
+                @StandStill.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStandStill;
+                @StandStill.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStandStill;
+                @StandStill.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStandStill;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -298,6 +324,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Operate.started += instance.OnOperate;
                 @Operate.performed += instance.OnOperate;
                 @Operate.canceled += instance.OnOperate;
+                @StandStill.started += instance.OnStandStill;
+                @StandStill.performed += instance.OnStandStill;
+                @StandStill.canceled += instance.OnStandStill;
             }
         }
     }
@@ -307,5 +336,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnOperate(InputAction.CallbackContext context);
+        void OnStandStill(InputAction.CallbackContext context);
     }
 }

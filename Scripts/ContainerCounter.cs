@@ -12,11 +12,9 @@ public class ContainerCounter : BaseCounter, IKitchenObjectParent
     [Space] [Header("Kitchen Object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
     [SerializeField] private KitchenObject kitchenObject;
-    [SerializeField] private SpriteRenderer kitchenObjectSprite;
 
     private void Start()
     {
-        kitchenObjectSprite.sprite = kitchenObject.GetKitchenObjectSO().objectSprite;
         SetMaterial(defaultMaterial);
     }
 

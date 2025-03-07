@@ -22,9 +22,14 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     // String constants
     private const string IsWalking = "IsWalking";
 
-    private void Start()
+    private void OnEnable()
     {
         gameInput.OnInteract += () => selectedCounter?.Interact(this);
+    }
+
+    private void OnDisable()
+    {
+        gameInput.OnInteract -= () => selectedCounter?.Interact(this);
     }
 
     private void Update()
@@ -38,7 +43,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         // Getting input here
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
         Vector3 moveDir = new(inputVector.x, 0f, inputVector.y);
-        playerController.Move(moveSpeed * Time.deltaTime * moveDir);
+        if (!gameInput.IsStandStillHeld()) playerController.Move(moveSpeed * Time.deltaTime * moveDir);
 
         // Smooth rotation
         if (moveDir.sqrMagnitude > 0.001f) transform.forward = Vector3.Slerp(transform.forward, moveDir, rotateSpeed * Time.deltaTime);

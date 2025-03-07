@@ -59,6 +59,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4841286013473667211, guid: 9a9137fa2b035d34e881701d2c178192, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4841286013473667211, guid: 9a9137fa2b035d34e881701d2c178192, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261771210811040880, guid: 9a9137fa2b035d34e881701d2c178192, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7816906318471787887, guid: 9a9137fa2b035d34e881701d2c178192, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -82,11 +94,6 @@ MeshRenderer:
 --- !u!23 &5924033462607219451 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 7638390755804248883, guid: 9a9137fa2b035d34e881701d2c178192, type: 3}
-  m_PrefabInstance: {fileID: 4050819502226403784}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &8870073776541780291 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4841286013473667211, guid: 9a9137fa2b035d34e881701d2c178192, type: 3}
   m_PrefabInstance: {fileID: 4050819502226403784}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7440018057436779425
@@ -114,7 +121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7906509040929231243, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7906509040929231243, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -156,7 +163,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7906509040929231240, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
   m_PrefabInstance: {fileID: 7440018057436779425}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &160075684
+--- !u!114 &5431096056136703569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,7 +183,6 @@ MonoBehaviour:
   selectedMaterial: {fileID: 2100000, guid: 51edecdb7b67ea04fa7c0a02df0f14d1, type: 2}
   kitchenObjectHoldPoint: {fileID: 745886357474326851}
   kitchenObject: {fileID: 0}
-  kitchenObjectSprite: {fileID: 8870073776541780291}
 --- !u!4 &790893093711938090 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7906509040929231243, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
