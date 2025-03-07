@@ -17,20 +17,20 @@ public class ContainerCounter : BaseCounter, IKitchenObjectParent
     private void Start()
     {
         kitchenObjectSprite.sprite = kitchenObject.GetKitchenObjectSO().objectSprite;
-        SetRenderer(defaultMaterial);
+        SetMaterial(defaultMaterial);
     }
 
     public override void HighlightCounter()
     {
-        SetRenderer(selectedMaterial);
+        SetMaterial(selectedMaterial);
     }
 
     public override void UnHighlightCounter()
     {
-        SetRenderer(defaultMaterial);
+        SetMaterial(defaultMaterial);
     }
 
-    private void SetRenderer(Material material)
+    private void SetMaterial(Material material)
     {
         foreach (MeshRenderer renderer in counterRenderers)
         {

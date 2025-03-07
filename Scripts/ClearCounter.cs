@@ -15,38 +15,36 @@ public class ClearCounter : BaseCounter, IKitchenObjectParent
 
     private void Start()
     {
-        SetRenderer(defaultMaterial);
+        SetMaterial(defaultMaterial);
     }
 
     public override void HighlightCounter()
     {
-        SetRenderer(selectedMaterial);
+        SetMaterial(selectedMaterial);
     }
 
     public override void UnHighlightCounter()
     {
-        SetRenderer(defaultMaterial);
+        SetMaterial(defaultMaterial);
     }
 
-    private void SetRenderer(Material material)
+    private void SetMaterial(Material material)
     {
         foreach (MeshRenderer renderer in counterRenderers)
         {
             renderer.material = material;
         }
     }
-    
+
     public override void Interact(Player player)
     {
         if (HasKitchenObject() && !player.HasKitchenObject())
         {
             kitchenObject.SetKitchenObjectParent(player); 
-            this.SetKitchenObject(null);
         }
         else if (!HasKitchenObject() && player.HasKitchenObject())
         {
             player.GetKitchenObject().SetKitchenObjectParent(this);
-            player.SetKitchenObject(null);
         }
     }
 

@@ -8,6 +8,11 @@ public class KitchenObject : MonoBehaviour
 
     public void SetKitchenObjectParent(IKitchenObjectParent kitchenObjectParent)
     {
+        if (this.kitchenObjectParent != null)
+        {
+            this.kitchenObjectParent.SetKitchenObject(null);
+        }
+
         this.kitchenObjectParent = kitchenObjectParent;
         transform.parent = kitchenObjectParent.GetKitchenObjectHoldPoint();
         transform.localPosition = Vector3.zero;
