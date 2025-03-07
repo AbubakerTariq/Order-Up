@@ -17,7 +17,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     [SerializeField] private KitchenObject kitchenObject;
 
     // Other variable
-    private Counter selectedCounter;
+    private BaseCounter selectedCounter;
 
     // String constants
     private const string IsWalking = "IsWalking";
@@ -51,7 +51,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     {
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, interactRange))
         {
-            if (hit.transform.TryGetComponent(out Counter counter))
+            if (hit.transform.TryGetComponent(out BaseCounter counter))
             {
                 if (selectedCounter != counter)
                 {
@@ -70,7 +70,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         }
     }
 
-    private void SetSelectedCounter(Counter counter)
+    private void SetSelectedCounter(BaseCounter counter)
     {
         selectedCounter?.UnHighlightCounter();
         selectedCounter = counter;

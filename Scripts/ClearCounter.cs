@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Counter : MonoBehaviour, IKitchenObjectParent
+public class ClearCounter : BaseCounter, IKitchenObjectParent
 {
     [Space] [Header("Component references")]
-    [SerializeField] private MeshRenderer counterRenderer;
+    [SerializeField] private MeshRenderer[] counterRenderers;
 
     [Space] [Header("Materials")]
     [SerializeField] private Material defaultMaterial;
@@ -11,40 +11,42 @@ public class Counter : MonoBehaviour, IKitchenObjectParent
 
     [Space] [Header("Kitchen Object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
-    [SerializeField] private KitchenObject kitchenObject;
-    [SerializeField] private KitchenObject[] allKitchenObjects;
+    private KitchenObject kitchenObject;
 
     private void Start()
     {
-        counterRenderer.material = defaultMaterial;
+        SetRenderer(defaultMaterial);
     }
 
-    public void HighlightCounter()
+    public override void HighlightCounter()
     {
-        counterRenderer.material = selectedMaterial;
+        SetRenderer(selectedMaterial);
     }
 
-    public void UnHighlightCounter()
+    public override void UnHighlightCounter()
     {
-        counterRenderer.material = defaultMaterial;
+        SetRenderer(defaultMaterial);
     }
 
-    public void Interact(Player player)
+    private void SetRenderer(Material material)
+    {
+        foreach (MeshRenderer renderer in counterRenderers)
+        {
+            renderer.material = material;
+        }
+    }
+    
+    public override void Interact(Player player)
     {
         if (HasKitchenObject() && !player.HasKitchenObject())
         {
-            kitchenObject.SetKitchenObjectParent(player);
-            SetKitchenObject(null);
+            kitchenObject.SetKitchenObjectParent(player); 
+            this.SetKitchenObject(null);
         }
         else if (!HasKitchenObject() && player.HasKitchenObject())
         {
             player.GetKitchenObject().SetKitchenObjectParent(this);
             player.SetKitchenObject(null);
-        }
-        else if (!HasKitchenObject())
-        {
-            kitchenObject = Instantiate(allKitchenObjects[Random.Range(0, allKitchenObjects.Length)]);
-            kitchenObject.SetKitchenObjectParent(this);
         }
     }
 
