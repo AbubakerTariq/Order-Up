@@ -3,6 +3,7 @@ using UnityEngine;
 public class ContainerCounter : BaseCounter, IKitchenObjectParent
 {
     [Space] [Header("Component references")]
+    [SerializeField] private Animator counterAnimator;
     [SerializeField] private MeshRenderer[] counterRenderers;
 
     [Space] [Header("Materials")]
@@ -12,6 +13,8 @@ public class ContainerCounter : BaseCounter, IKitchenObjectParent
     [Space] [Header("Kitchen Object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
     [SerializeField] private KitchenObject kitchenObject;
+
+    private const string OpenClose = "OpenClose";
 
     private void Start()
     {
@@ -40,6 +43,7 @@ public class ContainerCounter : BaseCounter, IKitchenObjectParent
     {
         if (!player.HasKitchenObject())
         {
+            counterAnimator.SetTrigger(OpenClose);
             KitchenObject spawnedKitchenObject = Instantiate(kitchenObject);
             spawnedKitchenObject.SetKitchenObjectParent(player);
         }

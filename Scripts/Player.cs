@@ -4,7 +4,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 {
     [Space] [Header("Player settings")]
     [SerializeField] private float moveSpeed = 7.5f;
-    [SerializeField] private float rotateSpeed = 5f;
+    [SerializeField] private float rotateSpeed = 20f;
     [SerializeField] private float interactRange = 1f;
 
     [Space] [Header("Component references")]
