@@ -926,6 +926,71 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bb9ed0dc0804784387d22ee536dc4de, type: 3}
+--- !u!1001 &1839951844
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5316826402281589597, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_Name
+      value: Cutting Counter
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316826402281589598, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316826402281589598, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316826402281589598, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316826402281589598, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316826402281589598, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316826402281589598, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316826402281589598, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316826402281589598, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316826402281589598, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316826402281589598, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316826402281589598, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7870942811490603592, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: kitchenObject
+      value: 
+      objectReference: {fileID: 6040784057438759281, guid: a4155415ab1db1d4db085867ec6a0c16, type: 3}
+    - target: {fileID: 7870942811490603592, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
+      propertyPath: kitchenObjectToSpawn
+      value: 
+      objectReference: {fileID: 6040784057438759281, guid: a4155415ab1db1d4db085867ec6a0c16, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
 --- !u!1 &1928085383
 GameObject:
   m_ObjectHideFlags: 0

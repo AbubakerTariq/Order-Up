@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class ClearCounter : BaseCounter, IKitchenObjectParent
+public class CuttingCounter : BaseCounter, IKitchenObjectParent
 {
     [Space] [Header("Component references")]
+    [SerializeField] private Animator counterAnimator;
     [SerializeField] private MeshRenderer[] counterRenderers;
 
     [Space] [Header("Materials")]
@@ -12,6 +13,7 @@ public class ClearCounter : BaseCounter, IKitchenObjectParent
     [Space] [Header("Kitchen Object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
     private KitchenObject kitchenObject;
+    [SerializeField] private KitchenObject kitchenObjectToSpawn;
 
     private void Start()
     {
@@ -38,13 +40,22 @@ public class ClearCounter : BaseCounter, IKitchenObjectParent
 
     public override void Interact(Player player)
     {
-        if (HasKitchenObject() && !player.HasKitchenObject())
-        {
-            GetKitchenObject().SetKitchenObjectParent(player); 
-        }
-        else if (!HasKitchenObject() && player.HasKitchenObject())
+        if (!HasKitchenObject() && player.HasKitchenObject())
         {
             player.GetKitchenObject().SetKitchenObjectParent(this);
+        }
+        else if (HasKitchenObject() && !player.HasKitchenObject())
+        {
+            GetKitchenObject().SetKitchenObjectParent(player);
+        }
+    }
+
+    public override void Operate(Player player)
+    {
+        if (HasKitchenObject())
+        {
+            GetKitchenObject().DestroySelf();
+            KitchenObject.SpawnKitchenObject(kitchenObjectToSpawn, this);
         }
     }
 

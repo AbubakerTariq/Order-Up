@@ -25,11 +25,13 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     private void OnEnable()
     {
         gameInput.OnInteract += () => selectedCounter?.Interact(this);
+        gameInput.OnOperate += () => selectedCounter?.Operate(this);
     }
 
     private void OnDisable()
     {
         gameInput.OnInteract -= () => selectedCounter?.Interact(this);
+        gameInput.OnOperate -= () => selectedCounter?.Operate(this);
     }
 
     private void Update()

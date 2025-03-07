@@ -7,6 +7,11 @@ public class BaseCounter : MonoBehaviour
         Debug.Log(player + " interacted with: " + this);
     }
 
+    public virtual void Operate(Player player)
+    {
+        Debug.Log(player + " performed operation on: " + this);
+    }
+
     public virtual void HighlightCounter()
     {
         Debug.Log("Highlighted: " + this);
