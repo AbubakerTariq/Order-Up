@@ -13,7 +13,6 @@ public class ContainerCounter : BaseCounter, IKitchenObjectParent
     [Space] [Header("Kitchen object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
     [SerializeField] private KitchenObject kitchenObject;
-
     private const string OpenClose = "OpenClose";
 
     private void Start()

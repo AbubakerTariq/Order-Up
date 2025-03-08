@@ -1068,14 +1068,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7870942811490603592, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
-      propertyPath: kitchenObject
-      value: 
-      objectReference: {fileID: 6040784057438759281, guid: a4155415ab1db1d4db085867ec6a0c16, type: 3}
-    - target: {fileID: 7870942811490603592, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
-      propertyPath: kitchenObjectToSpawn
-      value: 
-      objectReference: {fileID: 6040784057438759281, guid: a4155415ab1db1d4db085867ec6a0c16, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf2db12b789efac4ab5f7c3886636f04, type: 3}
 --- !u!4 &1846441271 stripped
