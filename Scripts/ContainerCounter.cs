@@ -46,7 +46,7 @@ public class ContainerCounter : BaseCounter, IKitchenObjectParent
             counterAnimator.SetTrigger(OpenClose);
             KitchenObject.SpawnKitchenObject(kitchenObject, player);
         }
-        else if (player.HasKitchenObject() && player.GetKitchenObject().kitchenObjectType == kitchenObject.kitchenObjectType)
+        else if (player.HasKitchenObject() && player.GetKitchenObject().GetKitchenObjectType() == kitchenObject.GetKitchenObjectType())
         {
             player.GetKitchenObject().DestroySelf();
         }
