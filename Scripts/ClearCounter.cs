@@ -9,7 +9,7 @@ public class ClearCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material selectedMaterial;
 
-    [Space] [Header("Kitchen Object")]
+    [Space] [Header("Kitchen object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
     private KitchenObject kitchenObject;
 

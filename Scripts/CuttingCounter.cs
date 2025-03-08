@@ -10,10 +10,10 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material selectedMaterial;
 
-    [Space] [Header("Kitchen Object")]
+    [Space] [Header("Kitchen object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
+    [SerializeField] private CuttingRecipeSO[] cuttingRecipes;
     private KitchenObject kitchenObject;
-    [SerializeField] private KitchenObject kitchenObjectToSpawn;
 
     private void Start()
     {
@@ -52,11 +52,26 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
 
     public override void Operate(Player player)
     {
-        if (HasKitchenObject())
+        if (HasKitchenObject() && IsCuttable(GetKitchenObject(), out KitchenObject cutObject))
         {
             GetKitchenObject().DestroySelf();
-            KitchenObject.SpawnKitchenObject(kitchenObjectToSpawn, this);
+            KitchenObject.SpawnKitchenObject(cutObject, this);
         }
+    }
+
+    private bool IsCuttable(KitchenObject kitchenObject, out KitchenObject cutObject)
+    {
+        foreach (CuttingRecipeSO cuttingRecipe in cuttingRecipes)
+        {
+            if (kitchenObject.GetKitchenObjectType() == cuttingRecipe.input.GetKitchenObjectType())
+            {
+                cutObject = cuttingRecipe.output;
+                return true;
+            }
+        }
+
+        cutObject = null;
+        return false;
     }
 
     public Transform GetKitchenObjectHoldPoint()

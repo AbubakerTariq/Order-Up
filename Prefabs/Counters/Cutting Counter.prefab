@@ -85,7 +85,10 @@ MonoBehaviour:
   defaultMaterial: {fileID: 592705374249410987, guid: e3d496c6436b0cf4a8eef3d8865e8639, type: 3}
   selectedMaterial: {fileID: 2100000, guid: 51edecdb7b67ea04fa7c0a02df0f14d1, type: 2}
   kitchenObjectHoldPoint: {fileID: 5289781046470651959}
-  kitchenObject: {fileID: 0}
+  cuttingRecipes:
+  - {fileID: 11400000, guid: 64457c79b0773a2408bd23968f5dabd1, type: 2}
+  - {fileID: 11400000, guid: a9e6cf815c02dbe49a5965781c3efc3e, type: 2}
+  - {fileID: 11400000, guid: 66c159926d182fc4e9d1ce9dcad73c7f, type: 2}
 --- !u!4 &5316826402281589598 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7906509040929231243, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
