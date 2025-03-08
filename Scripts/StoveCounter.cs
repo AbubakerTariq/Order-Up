@@ -1,11 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 
-public class CuttingCounter : BaseCounter, IKitchenObjectParent
+public class StoveCounter : BaseCounter, IKitchenObjectParent
 {
     [Space] [Header("Component references")]
-    [SerializeField] private Animator counterAnimator;
     [SerializeField] private MeshRenderer[] counterRenderers;
 
     [Space] [Header("Materials")]
@@ -14,7 +12,7 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
 
     [Space] [Header("Kitchen object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
-    [SerializeField] private CuttingRecipeSO[] cuttingRecipes;
+    [SerializeField] private CookingRecipeSO[] cookingRecipes;
 
     [Space] [Header("UI")]
     [SerializeField] private GameObject ProgressBarUI;
@@ -22,13 +20,31 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private Gradient fillGradient;
 
     private KitchenObject kitchenObject;
-    private const string Cut = "Cut";
-    private int currentCuts = 0;
+    private float currentCookingTime = 0f;
 
     private void Start()
     {
         SetMaterial(defaultMaterial);
         ProgressBarUI.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (HasKitchenObject() && IsCookable(GetKitchenObject(), out KitchenObject cookedObject, out float maxCookingTime))
+        {
+            currentCookingTime += Time.deltaTime;
+            float progress = currentCookingTime / maxCookingTime;
+            UpdateProgressUI(progress);
+
+            if (currentCookingTime / maxCookingTime >= 1f)
+            {
+                ProgressBarUI.SetActive(false);
+                currentCookingTime = 0f;
+                progressBar.fillAmount = 0f;
+                GetKitchenObject().DestroySelf();
+                KitchenObject.SpawnKitchenObject(cookedObject, this);
+            }
+        }
     }
 
     public override void HighlightCounter()
@@ -51,10 +67,10 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
 
     public override void Interact(Player player)
     {
-        if (!HasKitchenObject() && player.HasKitchenObject())
+       if (!HasKitchenObject() && player.HasKitchenObject() && IsCookable(player.GetKitchenObject()))
         {
             player.GetKitchenObject().SetKitchenObjectParent(this);
-            currentCuts = 0;
+            currentCookingTime = 0f;
             progressBar.fillAmount = 0f;
         }
         else if (HasKitchenObject() && !player.HasKitchenObject())
@@ -64,43 +80,39 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
         }
     }
 
-    public override void Operate(Player player)
+    private bool IsCookable(KitchenObject kitchenObject)
     {
-        if (HasKitchenObject() && IsCuttable(GetKitchenObject(), out KitchenObject cutObject, out int cutsNeeded))
+        foreach (CookingRecipeSO cookingRecipe in cookingRecipes)
         {
-            currentCuts++;
-            counterAnimator.SetTrigger(Cut);
-            UpdateProgressUI((float)currentCuts / cutsNeeded);
-
-            if (currentCuts >= cutsNeeded)
+            if (kitchenObject.GetKitchenObjectType() == cookingRecipe.input.GetKitchenObjectType())
             {
-                ProgressBarUI.SetActive(false);
-                GetKitchenObject().DestroySelf();
-                KitchenObject.SpawnKitchenObject(cutObject, this);
-            }
-        }
-    }
-
-    private bool IsCuttable(KitchenObject kitchenObject, out KitchenObject cutObject, out int numberOfCuts) {
-        foreach (CuttingRecipeSO cuttingRecipe in cuttingRecipes) {
-            if (kitchenObject.GetKitchenObjectType() == cuttingRecipe.input.GetKitchenObjectType()) {
-                numberOfCuts = cuttingRecipe.numberOfCuts;
-                cutObject = cuttingRecipe.output;
                 return true;
             }
         }
-        numberOfCuts = 0;
-        cutObject = null;
+        return false;
+    }
+
+    private bool IsCookable(KitchenObject kitchenObject, out KitchenObject cookedObject, out float cookingTime)
+    {
+        foreach (CookingRecipeSO cookingRecipe in cookingRecipes)
+        {
+            if (kitchenObject.GetKitchenObjectType() == cookingRecipe.input.GetKitchenObjectType())
+            {
+                cookingTime = cookingRecipe.cookingTime;
+                cookedObject = cookingRecipe.output;
+                return true;
+            }
+        }
+        cookingTime = 0f;
+        cookedObject = null;
         return false;
     }
 
     private void UpdateProgressUI(float progress)
     {   
         if (!ProgressBarUI.activeSelf) ProgressBarUI.SetActive(true);
-        progressBar.DOFillAmount(progress, 0.1f).OnUpdate(() => 
-        {
-            progressBar.color = fillGradient.Evaluate(progressBar.fillAmount);
-        });
+        progressBar.fillAmount = progress;
+        progressBar.color = fillGradient.Evaluate(progressBar.fillAmount);
     }
 
     public Transform GetKitchenObjectHoldPoint()
