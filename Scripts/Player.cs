@@ -15,12 +15,8 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     [Space] [Header("Kitchen object related")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
     [SerializeField] private KitchenObject kitchenObject;
-
-    // Other variable
-    private BaseCounter selectedCounter;
-
-    // String constants
     private const string IsWalking = "IsWalking";
+    private BaseCounter selectedCounter;
 
     private void OnEnable()
     {

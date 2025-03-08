@@ -14,6 +14,10 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private Transform kitchenObjectHoldPoint;
     [SerializeField] private CookingRecipeSO[] cookingRecipes;
 
+    [Space] [Header("VFX objects")]
+    [SerializeField] private GameObject sizzlingParticles;
+    [SerializeField] private GameObject stoveOnVisual;
+
     [Space] [Header("UI")]
     [SerializeField] private GameObject ProgressBarUI;
     [SerializeField] private Image progressBar;
@@ -25,7 +29,7 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
     private void Start()
     {
         SetMaterial(defaultMaterial);
-        ProgressBarUI.SetActive(false);
+        ResetCooking();
     }
 
     private void Update()
@@ -38,9 +42,7 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
 
             if (currentCookingTime / maxCookingTime >= 1f)
             {
-                ProgressBarUI.SetActive(false);
-                currentCookingTime = 0f;
-                progressBar.fillAmount = 0f;
+                ResetCooking();
                 GetKitchenObject().DestroySelf();
                 KitchenObject.SpawnKitchenObject(cookedObject, this);
             }
@@ -70,13 +72,11 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
        if (!HasKitchenObject() && player.HasKitchenObject() && IsCookable(player.GetKitchenObject()))
         {
             player.GetKitchenObject().SetKitchenObjectParent(this);
-            currentCookingTime = 0f;
-            progressBar.fillAmount = 0f;
         }
         else if (HasKitchenObject() && !player.HasKitchenObject())
         {
             GetKitchenObject().SetKitchenObjectParent(player);
-            ProgressBarUI.SetActive(false);
+            ResetCooking();
         }
     }
 
@@ -111,8 +111,20 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
     private void UpdateProgressUI(float progress)
     {   
         if (!ProgressBarUI.activeSelf) ProgressBarUI.SetActive(true);
+        if (!sizzlingParticles.activeSelf) sizzlingParticles.SetActive(true);
+        if (!stoveOnVisual.activeSelf) stoveOnVisual.SetActive(true);
+
         progressBar.fillAmount = progress;
         progressBar.color = fillGradient.Evaluate(progressBar.fillAmount);
+    }
+
+    private void ResetCooking()
+    {
+        currentCookingTime = 0f;
+        progressBar.fillAmount = 0f;
+        sizzlingParticles.SetActive(false);
+        stoveOnVisual.SetActive(false);
+        ProgressBarUI.SetActive(false);
     }
 
     public Transform GetKitchenObjectHoldPoint()

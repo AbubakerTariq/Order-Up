@@ -353,6 +353,16 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 496015676961670754, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
   m_PrefabInstance: {fileID: 3226265943436819717}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3240539566397355106 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 17251720544094567, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+  m_PrefabInstance: {fileID: 3226265943436819717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7257480658410054635 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5220305274835918574, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+  m_PrefabInstance: {fileID: 3226265943436819717}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3875922624106807209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -447,6 +457,8 @@ MonoBehaviour:
   cookingRecipes:
   - {fileID: 11400000, guid: d17365abe01499f46a88ede6d2fdbf06, type: 2}
   - {fileID: 11400000, guid: 728e395d9c327b04d8cdaba8ccae7b44, type: 2}
+  sizzlingParticles: {fileID: 7257480658410054635}
+  stoveOnVisual: {fileID: 3240539566397355106}
   ProgressBarUI: {fileID: 2489235297122778328}
   progressBar: {fileID: 8265801962257779954}
   fillGradient:
