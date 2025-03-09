@@ -3,20 +3,32 @@ using System.Collections.Generic;
 
 public class PlateKitchenObject : KitchenObject
 {
-    private static List<KitchenObjectType> validIngredients = new()
+    [System.Serializable]
+    private struct ValidIngredientsVisualPair
     {
-        KitchenObjectType.Bread,
-        KitchenObjectType.CabbageSliced,
-        KitchenObjectType.TomatoSlices,
-        KitchenObjectType.CheeseSlices,
-        KitchenObjectType.MeatPattyCooked,
-    };
+        public KitchenObjectType type;
+        public GameObject visual;
+    }
 
+    [SerializeField] private List<ValidIngredientsVisualPair> validIngredientsVisualPairs = new();
     private List<KitchenObjectType> heldKitchenObjects = new();
+
+    private void Start()
+    {
+        ResetVisuals();
+    }
+
+    private void ResetVisuals()
+    {
+        foreach (ValidIngredientsVisualPair pair in validIngredientsVisualPairs)
+        {
+            pair.visual.SetActive(false);
+        }
+    }
 
     public bool TryAddingIngredient(KitchenObjectType kitchenObjectType)
     {
-        if (!validIngredients.Contains(kitchenObjectType))
+        if (!IsValidIngrdient(kitchenObjectType))
         {
             return false;
         }
@@ -28,6 +40,8 @@ public class PlateKitchenObject : KitchenObject
         else
         {
             heldKitchenObjects.Add(kitchenObjectType);
+            ValidIngredientsVisualPair pair = validIngredientsVisualPairs.Find(x => x.type == kitchenObjectType);
+            pair.visual?.SetActive(true);
             return true;
         }
     }
@@ -40,10 +54,11 @@ public class PlateKitchenObject : KitchenObject
     public void EmptyPlate()
     {
         heldKitchenObjects.Clear();
+        ResetVisuals();
     }
 
-    public static bool IsValidIngrdient(KitchenObjectType kitchenObjectType)
+    public bool IsValidIngrdient(KitchenObjectType kitchenObjectType)
     {
-        return validIngredients.Contains(kitchenObjectType);
+        return validIngredientsVisualPairs.Exists(x => x.type == kitchenObjectType);
     }
 }
