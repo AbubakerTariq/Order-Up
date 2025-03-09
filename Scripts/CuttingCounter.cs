@@ -62,6 +62,14 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
             GetKitchenObject().SetKitchenObjectParent(player);
             ProgressBarUI.SetActive(false);
         }
+        else if (HasKitchenObject() && player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject)
+        {
+            PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
+            if (plateKitchenObject.TryAddingIngredient(GetKitchenObject().GetKitchenObjectType()))
+            {
+                GetKitchenObject().DestroySelf();
+            }
+        }
     }
 
     public override void Operate(Player player)

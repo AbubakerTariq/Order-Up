@@ -36,7 +36,14 @@ public class TrashCounter : BaseCounter
     {
         if (player.HasKitchenObject())
         {
-            player.GetKitchenObject().DestroySelf();
+            if (player.GetKitchenObject() is PlateKitchenObject)
+            {
+                (player.GetKitchenObject() as PlateKitchenObject).EmptyPlate();
+            }
+            else
+            {
+                player.GetKitchenObject().DestroySelf();
+            }
         }
     }
 }

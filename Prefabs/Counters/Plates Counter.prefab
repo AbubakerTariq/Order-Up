@@ -151,6 +151,6 @@ MonoBehaviour:
   defaultMaterial: {fileID: 592705374249410987, guid: e3d496c6436b0cf4a8eef3d8865e8639, type: 3}
   selectedMaterial: {fileID: 2100000, guid: 51edecdb7b67ea04fa7c0a02df0f14d1, type: 2}
   kitchenObjectHoldPoint: {fileID: 1113595982031135312}
-  plateKitchenObject: {fileID: 6040784057438759281, guid: 96706565f0e279b448fe4b4e12a2dc6f, type: 3}
+  plateKitchenObject: {fileID: 7468158815005694674, guid: 96706565f0e279b448fe4b4e12a2dc6f, type: 3}
   plateVisualPrefab: {fileID: 3812876574508226176, guid: c0c9afd619b40914a8f625c0535e2284, type: 3}
   maxPlates: 8

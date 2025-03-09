@@ -78,6 +78,15 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
             GetKitchenObject().SetKitchenObjectParent(player);
             ResetCooking();
         }
+        else if (HasKitchenObject() && player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject)
+        {
+            PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
+            if (plateKitchenObject.TryAddingIngredient(GetKitchenObject().GetKitchenObjectType()))
+            {
+                GetKitchenObject().DestroySelf();
+                ResetCooking();
+            }
+        }
     }
 
     private bool IsCookable(KitchenObject kitchenObject)

@@ -49,6 +49,14 @@ public class ContainerCounter : BaseCounter, IKitchenObjectParent
         {
             player.GetKitchenObject().DestroySelf();
         }
+        else if (player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject)
+        {
+            PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
+            if (plateKitchenObject.TryAddingIngredient(GetKitchenObject().GetKitchenObjectType()))
+            {
+                counterAnimator.SetTrigger(OpenClose);
+            }
+        }
     }
 
     public Transform GetKitchenObjectHoldPoint()

@@ -14,7 +14,7 @@ public class PlatesCounter : BaseCounter
     [SerializeField] private Transform kitchenObjectHoldPoint;
 
     [Space] [Header("Plate")]
-    [SerializeField] private KitchenObject plateKitchenObject;
+    [SerializeField] private PlateKitchenObject plateKitchenObject;
     [SerializeField] private Transform plateVisualPrefab;
     [SerializeField] private int maxPlates = 8;
     private List<GameObject> plateVisualList = new();
@@ -50,15 +50,29 @@ public class PlatesCounter : BaseCounter
 
     public override void Interact(Player player)
     {
-        if (player.HasKitchenObject() && player.GetKitchenObject().GetKitchenObjectType() == KitchenObject.KitchenObjectType.Plate && plateVisualList.Count < maxPlates)
+        if (player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject && plateVisualList.Count < maxPlates)
         {
-            player.GetKitchenObject().DestroySelf();
-            AddPlate();
+            if ((player.GetKitchenObject() as PlateKitchenObject).IsPlateEmpty())
+            {
+                player.GetKitchenObject().DestroySelf();
+                AddPlate();
+            }
         }
         else if (!player.HasKitchenObject() && plateVisualList.Count > 0)
         {
             KitchenObject.SpawnKitchenObject(plateKitchenObject, player);
             RemovePlate();
+        }
+        else if (player.HasKitchenObject() && PlateKitchenObject.IsValidIngrdient(player.GetKitchenObject().GetKitchenObjectType()) && plateVisualList.Count > 0)
+        {
+            KitchenObject playerObject = player.GetKitchenObject();
+            player.GetKitchenObject().DestroySelf();
+
+            PlateKitchenObject newPlate = KitchenObject.SpawnKitchenObject(plateKitchenObject, player) as PlateKitchenObject;
+            RemovePlate();
+
+            newPlate.TryAddingIngredient(playerObject.GetKitchenObjectType());
+            newPlate.SetKitchenObjectParent(player);
         }
     }
 
