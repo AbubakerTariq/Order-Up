@@ -65,15 +65,12 @@ public class PlatesCounter : BaseCounter
         }
         else if (player.HasKitchenObject() && plateKitchenObject.IsValidIngrdient(player.GetKitchenObject().GetKitchenObjectType()) && plateVisualList.Count > 0)
         {
-
             KitchenObject playerObject = player.GetKitchenObject();
             player.GetKitchenObject().DestroySelf();
 
             PlateKitchenObject newPlate = KitchenObject.SpawnKitchenObject(plateKitchenObject, player) as PlateKitchenObject;
+            newPlate.TryAddingIngredient(playerObject);
             RemovePlate();
-
-            newPlate.TryAddingIngredient(playerObject.GetKitchenObjectType());
-            newPlate.SetKitchenObjectParent(player);
         }
     }
 

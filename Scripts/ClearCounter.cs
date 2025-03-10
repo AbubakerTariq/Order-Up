@@ -49,7 +49,7 @@ public class ClearCounter : BaseCounter, IKitchenObjectParent
         else if (HasKitchenObject() && player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject)
         {
             PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
-            if (plateKitchenObject.TryAddingIngredient(GetKitchenObject().GetKitchenObjectType()))
+            if (plateKitchenObject.TryAddingIngredient(GetKitchenObject()))
             {
                 GetKitchenObject().DestroySelf();
             }
@@ -57,7 +57,7 @@ public class ClearCounter : BaseCounter, IKitchenObjectParent
         else if (HasKitchenObject() && GetKitchenObject() is PlateKitchenObject && player.HasKitchenObject())
         {
             PlateKitchenObject plateKitchenObject = GetKitchenObject() as PlateKitchenObject;
-            if (plateKitchenObject.TryAddingIngredient(player.GetKitchenObject().GetKitchenObjectType()))
+            if (plateKitchenObject.TryAddingIngredient(player.GetKitchenObject()))
             {
                 player.GetKitchenObject().DestroySelf();
             }

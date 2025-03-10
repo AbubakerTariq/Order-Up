@@ -65,7 +65,7 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
         else if (HasKitchenObject() && player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject)
         {
             PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
-            if (plateKitchenObject.TryAddingIngredient(GetKitchenObject().GetKitchenObjectType()))
+            if (plateKitchenObject.TryAddingIngredient(GetKitchenObject()))
             {
                 GetKitchenObject().DestroySelf();
             }

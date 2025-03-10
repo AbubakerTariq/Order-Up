@@ -26,21 +26,22 @@ public class PlateKitchenObject : KitchenObject
         }
     }
 
-    public bool TryAddingIngredient(KitchenObjectType kitchenObjectType)
+    public bool TryAddingIngredient(KitchenObject ingredient)
     {
-        if (!IsValidIngrdient(kitchenObjectType))
+        KitchenObjectType ingredientType = ingredient.GetKitchenObjectType();
+        if (!IsValidIngrdient(ingredientType))
         {
             return false;
         }
 
-        if (heldKitchenObjects.Contains(kitchenObjectType))
+        if (heldKitchenObjects.Contains(ingredientType))
         {
             return false;
         }
         else
         {
-            heldKitchenObjects.Add(kitchenObjectType);
-            ValidIngredientsVisualPair pair = validIngredientsVisualPairs.Find(x => x.type == kitchenObjectType);
+            heldKitchenObjects.Add(ingredientType);
+            ValidIngredientsVisualPair pair = validIngredientsVisualPairs.Find(x => x.type == ingredientType);
             pair.visual?.SetActive(true);
             return true;
         }
