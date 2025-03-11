@@ -63,14 +63,20 @@ public class PlatesCounter : BaseCounter
             KitchenObject.SpawnKitchenObject(plateKitchenObject, player);
             RemovePlate();
         }
-        else if (player.HasKitchenObject() && plateKitchenObject.IsValidIngrdient(player.GetKitchenObject().GetKitchenObjectType()) && plateVisualList.Count > 0)
+        else if (player.HasKitchenObject() && plateVisualList.Count > 0)
         {
-            KitchenObject playerObject = player.GetKitchenObject();
-            player.GetKitchenObject().DestroySelf();
-
-            PlateKitchenObject newPlate = KitchenObject.SpawnKitchenObject(plateKitchenObject, player) as PlateKitchenObject;
-            newPlate.TryAddingIngredient(playerObject);
-            RemovePlate();
+            PlateKitchenObject newPlate = Instantiate(plateKitchenObject);
+            if (newPlate.TryAddingIngredient(player.GetKitchenObject()))
+            {
+                player.GetKitchenObject().DestroySelf();
+                newPlate.SetKitchenObjectParent(player);
+                RemovePlate();
+            }
+            else
+            {
+                Debug.Log("Delete new plate");
+                Destroy(newPlate.gameObject);
+            }
         }
     }
 

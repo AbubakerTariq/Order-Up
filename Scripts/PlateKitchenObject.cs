@@ -9,14 +9,8 @@ public class PlateKitchenObject : KitchenObject
         public KitchenObjectType type;
         public GameObject visual;
     }
-
     [SerializeField] private List<ValidIngredientsVisualPair> validIngredientsVisualPairs = new();
     private List<KitchenObjectType> heldKitchenObjects = new();
-
-    private void Start()
-    {
-        ResetVisuals();
-    }
 
     private void ResetVisuals()
     {
@@ -29,22 +23,23 @@ public class PlateKitchenObject : KitchenObject
     public bool TryAddingIngredient(KitchenObject ingredient)
     {
         KitchenObjectType ingredientType = ingredient.GetKitchenObjectType();
-        if (!IsValidIngrdient(ingredientType))
+
+        if (!validIngredientsVisualPairs.Exists(x => x.type == ingredientType))
         {
+            Debug.Log("Ingredient not a part of the recipe");
             return false;
         }
 
         if (heldKitchenObjects.Contains(ingredientType))
         {
+            Debug.Log("Ingredient is already a part of the recipe");
             return false;
         }
-        else
-        {
-            heldKitchenObjects.Add(ingredientType);
-            ValidIngredientsVisualPair pair = validIngredientsVisualPairs.Find(x => x.type == ingredientType);
-            pair.visual?.SetActive(true);
-            return true;
-        }
+
+        heldKitchenObjects.Add(ingredientType);
+        ValidIngredientsVisualPair pair = validIngredientsVisualPairs.Find(x => x.type == ingredientType);
+        pair.visual.SetActive(true);
+        return true;
     }
 
     public bool IsPlateEmpty()
@@ -56,10 +51,5 @@ public class PlateKitchenObject : KitchenObject
     {
         heldKitchenObjects.Clear();
         ResetVisuals();
-    }
-
-    public bool IsValidIngrdient(KitchenObjectType kitchenObjectType)
-    {
-        return validIngredientsVisualPairs.Exists(x => x.type == kitchenObjectType);
     }
 }
