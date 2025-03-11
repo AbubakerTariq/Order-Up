@@ -4,41 +4,29 @@ using System.Collections.Generic;
 public class PlateKitchenObject : KitchenObject
 {
     [System.Serializable]
-    private struct ValidIngredientsVisualPair
+    private struct Ingredient
     {
         public KitchenObjectType type;
         public GameObject visual;
+        public GameObject spriteIndicator;
     }
-    [SerializeField] private List<ValidIngredientsVisualPair> validIngredientsVisualPairs = new();
+
+    [SerializeField] private List<Ingredient> validIngredients = new();
     private List<KitchenObjectType> heldKitchenObjects = new();
 
-    private void ResetVisuals()
+    public bool TryAddingIngredient(KitchenObject kitchenObject)
     {
-        foreach (ValidIngredientsVisualPair pair in validIngredientsVisualPairs)
-        {
-            pair.visual.SetActive(false);
-        }
-    }
+        KitchenObjectType ingredientType = kitchenObject.GetKitchenObjectType();
 
-    public bool TryAddingIngredient(KitchenObject ingredient)
-    {
-        KitchenObjectType ingredientType = ingredient.GetKitchenObjectType();
-
-        if (!validIngredientsVisualPairs.Exists(x => x.type == ingredientType))
+        if (!validIngredients.Exists(x => x.type == ingredientType) || heldKitchenObjects.Contains(ingredientType))
         {
-            Debug.Log("Ingredient not a part of the recipe");
-            return false;
-        }
-
-        if (heldKitchenObjects.Contains(ingredientType))
-        {
-            Debug.Log("Ingredient is already a part of the recipe");
             return false;
         }
 
         heldKitchenObjects.Add(ingredientType);
-        ValidIngredientsVisualPair pair = validIngredientsVisualPairs.Find(x => x.type == ingredientType);
-        pair.visual.SetActive(true);
+        Ingredient ingredient = validIngredients.Find(x => x.type == ingredientType);
+        ingredient.visual?.SetActive(true);
+        ingredient.spriteIndicator?.SetActive(true);
         return true;
     }
 
@@ -50,6 +38,11 @@ public class PlateKitchenObject : KitchenObject
     public void EmptyPlate()
     {
         heldKitchenObjects.Clear();
-        ResetVisuals();
+        
+        foreach (Ingredient ingredient in validIngredients)
+        {
+            ingredient.visual.SetActive(false);
+            ingredient.spriteIndicator.SetActive(false);
+        }
     }
 }

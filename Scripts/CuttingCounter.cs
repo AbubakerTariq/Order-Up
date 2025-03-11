@@ -51,7 +51,7 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
 
     public override void Interact(Player player)
     {
-        if (!HasKitchenObject() && player.HasKitchenObject())
+        if (!HasKitchenObject() && player.HasKitchenObject() && IsCuttable(player.GetKitchenObject()))
         {
             player.GetKitchenObject().SetKitchenObjectParent(this);
             currentCuts = 0;
@@ -89,8 +89,22 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
         }
     }
 
+    private bool IsCuttable(KitchenObject kitchenObject)
+    {
+        foreach (CuttingRecipeSO cuttingRecipe in cuttingRecipes)
+        {
+            if (kitchenObject.GetKitchenObjectType() == cuttingRecipe.input.GetKitchenObjectType())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private bool IsCuttable(KitchenObject kitchenObject, out KitchenObject cutObject, out int numberOfCuts) {
-        foreach (CuttingRecipeSO cuttingRecipe in cuttingRecipes) {
+        foreach (CuttingRecipeSO cuttingRecipe in cuttingRecipes)
+        {
             if (kitchenObject.GetKitchenObjectType() == cuttingRecipe.input.GetKitchenObjectType()) {
                 numberOfCuts = cuttingRecipe.numberOfCuts;
                 cutObject = cuttingRecipe.output;

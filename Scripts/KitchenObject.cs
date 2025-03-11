@@ -28,7 +28,7 @@ public class KitchenObject : MonoBehaviour
         this.kitchenObjectParent = kitchenObjectParent; // Set new parent
         transform.parent = kitchenObjectParent.GetKitchenObjectHoldPoint();
         transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
+        // transform.localRotation = Quaternion.identity;
 
         kitchenObjectParent.SetKitchenObject(this);
     }

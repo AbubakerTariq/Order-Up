@@ -74,7 +74,6 @@ public class PlatesCounter : BaseCounter
             }
             else
             {
-                Debug.Log("Delete new plate");
                 Destroy(newPlate.gameObject);
             }
         }
