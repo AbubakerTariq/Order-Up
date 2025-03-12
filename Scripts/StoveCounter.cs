@@ -3,13 +3,6 @@ using UnityEngine.UI;
 
 public class StoveCounter : BaseCounter, IKitchenObjectParent
 {
-    [Space] [Header("Component references")]
-    [SerializeField] private MeshRenderer[] counterRenderers;
-
-    [Space] [Header("Materials")]
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material selectedMaterial;
-
     [Space] [Header("Kitchen object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
     [SerializeField] private CookingRecipeSO[] cookingRecipes;
@@ -22,13 +15,11 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private GameObject ProgressBarUI;
     [SerializeField] private Image progressBar;
     [SerializeField] private Gradient fillGradient;
-
     private KitchenObject kitchenObject;
     private float currentCookingTime = 0f;
 
     private void Start()
     {
-        SetMaterial(defaultMaterial);
         ResetCooking();
     }
 
@@ -46,24 +37,6 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
                 GetKitchenObject().DestroySelf();
                 KitchenObject.SpawnKitchenObject(cookedObject, this);
             }
-        }
-    }
-
-    public override void HighlightCounter()
-    {
-        SetMaterial(selectedMaterial);
-    }
-
-    public override void UnHighlightCounter()
-    {
-        SetMaterial(defaultMaterial);
-    }
-
-    private void SetMaterial(Material material)
-    {
-        foreach (MeshRenderer renderer in counterRenderers)
-        {
-            renderer.material = material;
         }
     }
 

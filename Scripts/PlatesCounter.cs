@@ -3,13 +3,6 @@ using System.Collections.Generic;
 
 public class PlatesCounter : BaseCounter
 {
-    [Space] [Header("Component references")]
-    [SerializeField] private MeshRenderer[] counterRenderers;
-
-    [Space] [Header("Materials")]
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material selectedMaterial;
-
     [Space] [Header("Kitchen object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
 
@@ -22,29 +15,9 @@ public class PlatesCounter : BaseCounter
 
     private void Start()
     {
-        SetMaterial(defaultMaterial);
-
         for (int i = 0; i < maxPlates; i++)
         {
             AddPlate();
-        }
-    }
-
-    public override void HighlightCounter()
-    {
-        SetMaterial(selectedMaterial);
-    }
-
-    public override void UnHighlightCounter()
-    {
-        SetMaterial(defaultMaterial);
-    }
-
-    private void SetMaterial(Material material)
-    {
-        foreach (MeshRenderer renderer in counterRenderers)
-        {
-            renderer.material = material;
         }
     }
 

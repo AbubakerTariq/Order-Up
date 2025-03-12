@@ -2,41 +2,13 @@ using UnityEngine;
 
 public class ContainerCounter : BaseCounter, IKitchenObjectParent
 {
-    [Space] [Header("Component references")]
+    [Space] [Header("Animator")]
     [SerializeField] private Animator counterAnimator;
-    [SerializeField] private MeshRenderer[] counterRenderers;
-
-    [Space] [Header("Materials")]
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material selectedMaterial;
-
+    
     [Space] [Header("Kitchen object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
     [SerializeField] private KitchenObject kitchenObject;
     private const string OpenClose = "OpenClose";
-
-    private void Start()
-    {
-        SetMaterial(defaultMaterial);
-    }
-
-    public override void HighlightCounter()
-    {
-        SetMaterial(selectedMaterial);
-    }
-
-    public override void UnHighlightCounter()
-    {
-        SetMaterial(defaultMaterial);
-    }
-
-    private void SetMaterial(Material material)
-    {
-        foreach (MeshRenderer renderer in counterRenderers)
-        {
-            renderer.material = material;
-        }
-    }
 
     public override void Interact(Player player)
     {

@@ -4,13 +4,8 @@ using DG.Tweening;
 
 public class CuttingCounter : BaseCounter, IKitchenObjectParent
 {
-    [Space] [Header("Component references")]
+    [Space] [Header("Animator")]
     [SerializeField] private Animator counterAnimator;
-    [SerializeField] private MeshRenderer[] counterRenderers;
-
-    [Space] [Header("Materials")]
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material selectedMaterial;
 
     [Space] [Header("Kitchen object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
@@ -20,33 +15,13 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private GameObject ProgressBarUI;
     [SerializeField] private Image progressBar;
     [SerializeField] private Gradient fillGradient;
-
     private KitchenObject kitchenObject;
     private const string Cut = "Cut";
     private int currentCuts = 0;
 
     private void Start()
     {
-        SetMaterial(defaultMaterial);
         ProgressBarUI.SetActive(false);
-    }
-
-    public override void HighlightCounter()
-    {
-        SetMaterial(selectedMaterial);
-    }
-
-    public override void UnHighlightCounter()
-    {
-        SetMaterial(defaultMaterial);
-    }
-
-    private void SetMaterial(Material material)
-    {
-        foreach (MeshRenderer renderer in counterRenderers)
-        {
-            renderer.material = material;
-        }
     }
 
     public override void Interact(Player player)
