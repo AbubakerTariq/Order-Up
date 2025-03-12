@@ -6,7 +6,7 @@ public class DeliveryCounter : BaseCounter
     {
         KitchenObject playerObject = player.GetKitchenObject();
 
-        if (playerObject is PlateKitchenObject plate)
+        if (playerObject is PlateKitchenObject)
         {
             playerObject.DestroySelf();
         }
