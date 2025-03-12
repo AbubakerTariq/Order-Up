@@ -50,25 +50,24 @@ public class PlatesCounter : BaseCounter
 
     public override void Interact(Player player)
     {
-        if (player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject && plateVisualList.Count < maxPlates)
+        KitchenObject playerObject = player.GetKitchenObject();
+
+        if (playerObject is PlateKitchenObject plate && plate.IsPlateEmpty() && plateVisualList.Count < maxPlates)
         {
-            if ((player.GetKitchenObject() as PlateKitchenObject).IsPlateEmpty())
-            {
-                player.GetKitchenObject().DestroySelf();
-                AddPlate();
-            }
+            playerObject.DestroySelf();
+            AddPlate();
         }
-        else if (!player.HasKitchenObject() && plateVisualList.Count > 0)
+        else if (!playerObject && plateVisualList.Count > 0)
         {
             KitchenObject.SpawnKitchenObject(plateKitchenObject, player);
             RemovePlate();
         }
-        else if (player.HasKitchenObject() && plateVisualList.Count > 0)
+        else if (playerObject && plateVisualList.Count > 0)
         {
             PlateKitchenObject newPlate = Instantiate(plateKitchenObject);
-            if (newPlate.TryAddingIngredient(player.GetKitchenObject()))
+            if (newPlate.TryAddingIngredient(playerObject))
             {
-                player.GetKitchenObject().DestroySelf();
+                playerObject.DestroySelf();
                 newPlate.SetKitchenObjectParent(player);
                 RemovePlate();
             }

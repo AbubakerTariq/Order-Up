@@ -34,16 +34,15 @@ public class TrashCounter : BaseCounter
 
     public override void Interact(Player player)
     {
-        if (player.HasKitchenObject())
+        KitchenObject playerObject = player.GetKitchenObject();
+
+        if (playerObject is PlateKitchenObject plate)
         {
-            if (player.GetKitchenObject() is PlateKitchenObject)
-            {
-                (player.GetKitchenObject() as PlateKitchenObject).EmptyPlate();
-            }
-            else
-            {
-                player.GetKitchenObject().DestroySelf();
-            }
+            plate.EmptyPlate();
+        }
+        else if (playerObject)
+        {
+            playerObject.DestroySelf();
         }
     }
 }

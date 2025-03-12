@@ -40,19 +40,21 @@ public class ContainerCounter : BaseCounter, IKitchenObjectParent
 
     public override void Interact(Player player)
     {
-        if (!player.HasKitchenObject())
+        KitchenObject counterObject = GetKitchenObject();
+        KitchenObject playerObject = player.GetKitchenObject();
+
+        if (!playerObject)
         {
             counterAnimator.SetTrigger(OpenClose);
             KitchenObject.SpawnKitchenObject(kitchenObject, player);
         }
-        else if (player.HasKitchenObject() && player.GetKitchenObject().GetKitchenObjectType() == kitchenObject.GetKitchenObjectType())
+        else
         {
-            player.GetKitchenObject().DestroySelf();
-        }
-        else if (player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject)
-        {
-            PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
-            if (plateKitchenObject.TryAddingIngredient(GetKitchenObject()))
+            if (playerObject.GetKitchenObjectType() == kitchenObject.GetKitchenObjectType())
+            {
+                playerObject.DestroySelf();
+            }
+            else if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
             {
                 counterAnimator.SetTrigger(OpenClose);
             }

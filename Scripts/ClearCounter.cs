@@ -38,28 +38,26 @@ public class ClearCounter : BaseCounter, IKitchenObjectParent
 
     public override void Interact(Player player)
     {
-        if (HasKitchenObject() && !player.HasKitchenObject())
+        KitchenObject counterObject = GetKitchenObject();
+        KitchenObject playerObject = player.GetKitchenObject();
+
+        if (counterObject && !playerObject)
         {
-            GetKitchenObject().SetKitchenObjectParent(player); 
+            counterObject.SetKitchenObjectParent(player);
         }
-        else if (!HasKitchenObject() && player.HasKitchenObject())
+        else if (!counterObject && playerObject)
         {
-            player.GetKitchenObject().SetKitchenObjectParent(this);
+            playerObject.SetKitchenObjectParent(this);
         }
-        else if (HasKitchenObject() && player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject)
+        else if (counterObject && playerObject)
         {
-            PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
-            if (plateKitchenObject.TryAddingIngredient(GetKitchenObject()))
+            if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
             {
-                GetKitchenObject().DestroySelf();
+                counterObject.DestroySelf();
             }
-        }
-        else if (HasKitchenObject() && GetKitchenObject() is PlateKitchenObject && player.HasKitchenObject())
-        {
-            PlateKitchenObject plateKitchenObject = GetKitchenObject() as PlateKitchenObject;
-            if (plateKitchenObject.TryAddingIngredient(player.GetKitchenObject()))
+            else if (counterObject is PlateKitchenObject counterPlate && counterPlate.TryAddingIngredient(playerObject))
             {
-                player.GetKitchenObject().DestroySelf();
+                playerObject.DestroySelf();
             }
         }
     }

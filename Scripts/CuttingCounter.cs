@@ -51,24 +51,23 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
 
     public override void Interact(Player player)
     {
-        if (!HasKitchenObject() && player.HasKitchenObject() && IsCuttable(player.GetKitchenObject()))
+        KitchenObject counterObject = GetKitchenObject();
+        KitchenObject playerObject = player.GetKitchenObject();
+
+        if (!counterObject && playerObject && IsCuttable(playerObject))
         {
-            player.GetKitchenObject().SetKitchenObjectParent(this);
+            playerObject.SetKitchenObjectParent(this);
             currentCuts = 0;
             progressBar.fillAmount = 0f;
         }
-        else if (HasKitchenObject() && !player.HasKitchenObject())
+        else if (counterObject && !playerObject)
         {
-            GetKitchenObject().SetKitchenObjectParent(player);
+            counterObject.SetKitchenObjectParent(player);
             ProgressBarUI.SetActive(false);
         }
-        else if (HasKitchenObject() && player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject)
+        else if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
         {
-            PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
-            if (plateKitchenObject.TryAddingIngredient(GetKitchenObject()))
-            {
-                GetKitchenObject().DestroySelf();
-            }
+            counterObject.DestroySelf();
         }
     }
 

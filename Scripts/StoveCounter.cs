@@ -69,23 +69,22 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
 
     public override void Interact(Player player)
     {
-       if (!HasKitchenObject() && player.HasKitchenObject() && IsCookable(player.GetKitchenObject()))
+        KitchenObject playerObject = player.GetKitchenObject();
+        KitchenObject counterObject = GetKitchenObject();
+
+        if (!counterObject && playerObject && IsCookable(playerObject))
         {
-            player.GetKitchenObject().SetKitchenObjectParent(this);
+            playerObject.SetKitchenObjectParent(this);
         }
-        else if (HasKitchenObject() && !player.HasKitchenObject())
+        else if (counterObject && !playerObject)
         {
-            GetKitchenObject().SetKitchenObjectParent(player);
+            counterObject.SetKitchenObjectParent(player);
             ResetCooking();
         }
-        else if (HasKitchenObject() && player.HasKitchenObject() && player.GetKitchenObject() is PlateKitchenObject)
+        else if (counterObject && playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
         {
-            PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
-            if (plateKitchenObject.TryAddingIngredient(GetKitchenObject()))
-            {
-                GetKitchenObject().DestroySelf();
-                ResetCooking();
-            }
+            counterObject.DestroySelf();
+            ResetCooking();
         }
     }
 
