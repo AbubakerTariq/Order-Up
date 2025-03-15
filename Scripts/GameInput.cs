@@ -13,10 +13,10 @@ public class GameInput : MonoBehaviour
         playerInputActions = new();
         playerInputActions.Player.Enable();
 
-        playerInputActions.Player.Interact.performed += (context) => OnInteract?.Invoke();
-        playerInputActions.Player.Operate.performed += (Icontext) => OnOperate?.Invoke();
-        playerInputActions.Player.StandStill.started += (context) => standStillHeld = true;
-        playerInputActions.Player.StandStill.canceled += (context) => standStillHeld = false;
+        playerInputActions.Player.Interact.performed += _ => OnInteract?.Invoke();
+        playerInputActions.Player.Operate.performed += _ => OnOperate?.Invoke();
+        playerInputActions.Player.StandStill.started += _ => standStillHeld = true;
+        playerInputActions.Player.StandStill.canceled += _ => standStillHeld = false;
     }
     
     public Vector2 GetMovementVectorNormalized()

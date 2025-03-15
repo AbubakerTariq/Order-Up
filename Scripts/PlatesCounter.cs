@@ -25,7 +25,7 @@ public class PlatesCounter : BaseCounter
     {
         KitchenObject playerObject = player.GetKitchenObject();
 
-        if (playerObject is PlateKitchenObject plate && plate.IsPlateEmpty() && plateVisualList.Count < maxPlates)
+        if (playerObject is PlateKitchenObject plate && plate.IsEmpty() && plateVisualList.Count < maxPlates)
         {
             playerObject.DestroySelf();
             AddPlate();

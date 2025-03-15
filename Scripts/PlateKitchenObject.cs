@@ -30,12 +30,12 @@ public class PlateKitchenObject : KitchenObject
         return true;
     }
 
-    public bool IsPlateEmpty()
+    public bool IsEmpty()
     {
         return heldKitchenObjects.Count == 0;
     }
 
-    public void EmptyPlate()
+    public void Clear()
     {
         heldKitchenObjects.Clear();
         
@@ -44,5 +44,10 @@ public class PlateKitchenObject : KitchenObject
             ingredient.visual.SetActive(false);
             ingredient.spriteIndicator.SetActive(false);
         }
+    }
+
+    public List<KitchenObjectType> GetPlateIngredients()
+    {
+        return heldKitchenObjects;
     }
 }

@@ -8,7 +8,7 @@ public class TrashCounter : BaseCounter
 
         if (playerObject is PlateKitchenObject plate)
         {
-            plate.EmptyPlate();
+            plate.Clear();
         }
         else if (playerObject)
         {

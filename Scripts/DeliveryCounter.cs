@@ -8,7 +8,7 @@ public class DeliveryCounter : BaseCounter
 
         if (playerObject is PlateKitchenObject)
         {
-            playerObject.DestroySelf();
+            Debug.Log("Is valid order: " + DeliveryManager.instance.DeliverRecipe(playerObject as PlateKitchenObject));
         }
     }
 }
