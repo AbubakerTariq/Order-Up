@@ -6,9 +6,9 @@ public class DeliveryCounter : BaseCounter
     {
         KitchenObject playerObject = player.GetKitchenObject();
 
-        if (playerObject is PlateKitchenObject)
+        if (playerObject is PlateKitchenObject plate && DeliveryManager.instance.DeliverRecipe(plate))
         {
-            Debug.Log("Is valid order: " + DeliveryManager.instance.DeliverRecipe(playerObject as PlateKitchenObject));
+            plate.Clear();
         }
     }
 }
