@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class DeliveryManager : MonoBehaviour
@@ -12,17 +12,20 @@ public class DeliveryManager : MonoBehaviour
     [SerializeField] private float orderWaitTimeMax = 10f;
     [SerializeField] private int maxOrders = 5;
 
+    [Space] [Header("UI")]
+    [SerializeField] private RectTransform ordersContainer;
+    [SerializeField] private OrderUI orderTemplateUI;
+
     public static DeliveryManager instance;
-    public UnityAction<DeliverableRecipeSO> OnOrderReceived;
-    public UnityAction<int> OnOrderDelivered;
     private List<DeliverableRecipeSO> currentOrdersList = new();
+    private List<OrderUI> currentOrdersListUI = new();
     private float currentOrderWaitTime = 0f;
     private float currentOrderWaitTimeElapsed = 0f;
 
     private void Start()
     {
         instance = this;
-        GenerateOrderWaitTime();
+        GenerateNextOrderWaitTime();
     }
 
     private void Update()
@@ -34,17 +37,43 @@ public class DeliveryManager : MonoBehaviour
 
         if (currentOrderWaitTimeElapsed > currentOrderWaitTime)
         {
-            DeliverableRecipeSO recipe = deliverableRecipes[Random.Range(0, deliverableRecipes.Count)];
-            OnOrderReceived?.Invoke(recipe);
-            currentOrdersList.Add(recipe);
-            GenerateOrderWaitTime();
+            AddOrder();
+            GenerateNextOrderWaitTime();
         }
     }
 
-    private void GenerateOrderWaitTime()
+    private void GenerateNextOrderWaitTime()
     {
         currentOrderWaitTimeElapsed = 0f;
         currentOrderWaitTime = Random.Range(orderWaitTimeMin, orderWaitTimeMax);
+    }
+
+    private void AddOrder()
+    {
+        DeliverableRecipeSO recipe = deliverableRecipes[Random.Range(0, deliverableRecipes.Count)];
+        currentOrdersList.Add(recipe);
+
+        OrderUI orderUI = Instantiate(orderTemplateUI, ordersContainer);
+        orderUI.gameObject.SetActive(true);
+        orderUI.recipeNameText.text = recipe.recipeName;
+        
+        foreach (KitchenObject ingredient in recipe.recipeList)
+        {
+            Image ingredientImage = Instantiate(orderUI.ingredientImage, orderUI.ingredientsContainer);
+            ingredientImage.sprite = ingredient.GetKitchenObjectSprite();
+            ingredientImage.gameObject.SetActive(true);
+        }
+
+        currentOrdersListUI.Add(orderUI);
+    }
+
+    private void RemoveOrder(int orderIndex)
+    {
+        currentOrdersList.RemoveAt(orderIndex);
+
+        GameObject objToRemove = currentOrdersListUI[orderIndex].gameObject;
+        currentOrdersListUI.RemoveAt(orderIndex);
+        Destroy(objToRemove);
     }
 
     public bool DeliverRecipe(PlateKitchenObject plate)
@@ -79,8 +108,7 @@ public class DeliveryManager : MonoBehaviour
 
             if (isMatch)
             {
-                currentOrdersList.RemoveAt(i);
-                OnOrderDelivered?.Invoke(i);
+                RemoveOrder(i);
                 return true;
             }
         }
