@@ -35,14 +35,17 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
             currentCuts = 0;
             progressBar.fillAmount = 0f;
         }
-        else if (counterObject && !playerObject)
+        else if (counterObject)
         {
-            counterObject.SetKitchenObjectParent(player);
-            ProgressBarUI.SetActive(false);
-        }
-        else if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
-        {
-            counterObject.DestroySelf();
+            if (!playerObject)
+            {
+                counterObject.SetKitchenObjectParent(player);
+                ProgressBarUI.SetActive(false);
+            }
+            else if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
+            {
+                counterObject.DestroySelf();
+            }
         }
     }
 

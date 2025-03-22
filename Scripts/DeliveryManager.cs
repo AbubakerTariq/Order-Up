@@ -10,6 +10,7 @@ public class DeliveryManager : MonoBehaviour
     [Space] [Header("Configurations")]
     [SerializeField] private float orderWaitTimeMin = 5f;
     [SerializeField] private float orderWaitTimeMax = 10f;
+    [SerializeField] private float timePerOrder = 25f;
     [SerializeField] private int maxOrders = 5;
 
     [Space] [Header("UI")]
@@ -19,8 +20,8 @@ public class DeliveryManager : MonoBehaviour
     public static DeliveryManager instance;
     private List<DeliverableRecipeSO> currentOrdersList = new();
     private List<OrderUI> currentOrdersListUI = new();
-    private float currentOrderWaitTime = 0f;
-    private float currentOrderWaitTimeElapsed = 0f;
+    private float nextOrderWaitTime = 0f;
+    private float nextOrderWaitTimeElapsed = 0f;
 
     private void Start()
     {
@@ -32,10 +33,10 @@ public class DeliveryManager : MonoBehaviour
     {
         if (currentOrdersList.Count < maxOrders)
         {
-            currentOrderWaitTimeElapsed += Time.deltaTime;
+            nextOrderWaitTimeElapsed += Time.deltaTime;
         }
 
-        if (currentOrderWaitTimeElapsed > currentOrderWaitTime)
+        if (nextOrderWaitTimeElapsed > nextOrderWaitTime)
         {
             AddOrder();
             GenerateNextOrderWaitTime();
@@ -44,8 +45,8 @@ public class DeliveryManager : MonoBehaviour
 
     private void GenerateNextOrderWaitTime()
     {
-        currentOrderWaitTimeElapsed = 0f;
-        currentOrderWaitTime = Random.Range(orderWaitTimeMin, orderWaitTimeMax);
+        nextOrderWaitTimeElapsed = 0f;
+        nextOrderWaitTime = Random.Range(orderWaitTimeMin, orderWaitTimeMax);
     }
 
     private void AddOrder()
