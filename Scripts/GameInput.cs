@@ -6,6 +6,8 @@ public class GameInput : MonoBehaviour
     private PlayerInputActions playerInputActions;
     public UnityAction OnInteract;
     public UnityAction OnOperate;
+    public UnityAction OnOperateStart;
+    public UnityAction OnOperateEnd;
     private bool standStillHeld;
 
     private void Awake()
@@ -15,6 +17,8 @@ public class GameInput : MonoBehaviour
 
         playerInputActions.Player.Interact.performed += _ => OnInteract?.Invoke();
         playerInputActions.Player.Operate.performed += _ => OnOperate?.Invoke();
+        playerInputActions.Player.Operate.started += _ => OnOperateStart?.Invoke();
+        playerInputActions.Player.Operate.canceled += _ => OnOperateEnd?.Invoke();
         playerInputActions.Player.StandStill.started += _ => standStillHeld = true;
         playerInputActions.Player.StandStill.canceled += _ => standStillHeld = false;
     }

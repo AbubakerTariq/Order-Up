@@ -181,6 +181,7 @@ MonoBehaviour:
   - {fileID: 4692107744896796382}
   defaultMaterial: {fileID: 2100000, guid: ddeee0face48cd346be478cda5ba7071, type: 2}
   selectedMaterial: {fileID: 2100000, guid: 62438ef9d766d5d44b24ca49aaac5b6f, type: 2}
+  dirtyPlate: {fileID: 5180084764785417364, guid: 2d5a3b4587971d146a204de63bc07d45, type: 3}
 --- !u!1001 &7844827952400085170
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ public class KitchenObject : MonoBehaviour
 {
     public enum KitchenObjectType
     {
-        Bread, Tomato, TomatoSlices, Cabbage, CabbageSliced, CheeseBlock, CheeseSlices, MeatPattyBurned, MeatPattyCooked, MeatPattyUncooked, Plate
+        Bread, Tomato, TomatoSlices, Cabbage, CabbageSliced, CheeseBlock, CheeseSlices, MeatPattyBurned, MeatPattyCooked, MeatPattyUncooked, Plate, DirtyPlate
     }
 
     [Space] [Header("Kitchen object parameters")]
