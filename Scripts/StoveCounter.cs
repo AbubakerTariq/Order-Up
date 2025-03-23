@@ -25,18 +25,21 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
 
     private void Update()
     {
-        if (HasKitchenObject() && IsCookable(GetKitchenObject(), out KitchenObject cookedObject, out float maxCookingTime))
-        {
-            currentCookingTime += Time.deltaTime;
-            float progress = currentCookingTime / maxCookingTime;
-            UpdateProgressUI(progress);
+        KitchenObject counterObject = GetKitchenObject();
+        if (!counterObject)
+            return;
 
-            if (currentCookingTime / maxCookingTime >= 1f)
-            {
-                ResetCooking();
-                GetKitchenObject().DestroySelf();
-                KitchenObject.SpawnKitchenObject(cookedObject, this);
-            }
+        if (!IsCookable(GetKitchenObject(), out KitchenObject cookedObject, out float maxCookingTime))
+            return;
+
+        currentCookingTime += Time.deltaTime;
+        UpdateProgressUI(currentCookingTime / maxCookingTime);
+
+        if (currentCookingTime / maxCookingTime >= 1f)
+        {
+            ResetCooking();
+            counterObject.DestroySelf();
+            KitchenObject.SpawnKitchenObject(cookedObject, this);
         }
     }
 

@@ -54,8 +54,8 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
         if (HasKitchenObject() && IsCuttable(GetKitchenObject(), out KitchenObject cutObject, out int cutsNeeded))
         {
             currentCuts++;
-            counterAnimator.SetTrigger(Cut);
             UpdateProgressUI((float)currentCuts / cutsNeeded);
+            counterAnimator.SetTrigger(Cut);
 
             if (currentCuts >= cutsNeeded)
             {

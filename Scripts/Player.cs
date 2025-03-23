@@ -63,7 +63,6 @@ public class Player : MonoBehaviour, IKitchenObjectParent
                 if (selectedCounter != counter)
                 {
                     SetSelectedCounter(counter);
-                    selectedCounter.HighlightCounter();
                 }
             }
             else
@@ -79,8 +78,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void SetSelectedCounter(BaseCounter counter)
     {
+        selectedCounter?.OperateEnd(this);
         selectedCounter?.UnHighlightCounter();
         selectedCounter = counter;
+        selectedCounter?.HighlightCounter();
     }
 
     public Transform GetKitchenObjectHoldPoint()
