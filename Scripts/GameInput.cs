@@ -1,13 +1,13 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class GameInput : MonoBehaviour
 {
     private PlayerInputActions playerInputActions;
-    public UnityAction OnInteract;
-    public UnityAction OnOperate;
-    public UnityAction OnOperateStart;
-    public UnityAction OnOperateEnd;
+    public Action OnInteract;
+    public Action OnOperate;
+    public Action OnOperateStart;
+    public Action OnOperateEnd;
     private bool standStillHeld;
 
     private void Awake()

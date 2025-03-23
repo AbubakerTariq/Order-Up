@@ -57,7 +57,7 @@ public class Sink : BaseCounter, IKitchenObjectParent
             counterObject.SetKitchenObjectParent(player);
             ProgressBarUI.SetActive(false);
         }
-        else if (!counterObject && playerObject.GetKitchenObjectType() == KitchenObject.KitchenObjectType.DirtyPlate)
+        else if (!counterObject && playerObject && playerObject.GetKitchenObjectType() == KitchenObject.KitchenObjectType.DirtyPlate)
         {
             playerObject.SetKitchenObjectParent(this);
             currentWashTime = 0f;
