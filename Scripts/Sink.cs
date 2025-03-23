@@ -12,7 +12,7 @@ public class Sink : BaseCounter, IKitchenObjectParent
     [SerializeField] private float washTime = 3.5f;
 
     [Space] [Header("UI")]
-    [SerializeField] private GameObject ProgressBarUI;
+    [SerializeField] private GameObject progressBarUI;
     [SerializeField] private Image progressBar;
     [SerializeField] private Gradient fillGradient;
 
@@ -21,7 +21,7 @@ public class Sink : BaseCounter, IKitchenObjectParent
 
     private void Start()
     {
-        ProgressBarUI.SetActive(false);
+        progressBarUI.SetActive(false);
     }
 
     private void Update()
@@ -41,7 +41,7 @@ public class Sink : BaseCounter, IKitchenObjectParent
 
         if (currentWashTime / washTime >= 1f)
         {
-            ProgressBarUI.SetActive(false);
+            progressBarUI.SetActive(false);
             counterObject.DestroySelf();
             KitchenObject.SpawnKitchenObject(plate, this);
         }
@@ -55,7 +55,7 @@ public class Sink : BaseCounter, IKitchenObjectParent
         if (counterObject && !playerObject)
         {
             counterObject.SetKitchenObjectParent(player);
-            ProgressBarUI.SetActive(false);
+            progressBarUI.SetActive(false);
         }
         else if (!counterObject && playerObject && playerObject.GetKitchenObjectType() == KitchenObject.KitchenObjectType.DirtyPlate)
         {
@@ -76,7 +76,7 @@ public class Sink : BaseCounter, IKitchenObjectParent
 
     private void UpdateProgressUI(float progress)
     {   
-        if (!ProgressBarUI.activeSelf) ProgressBarUI.SetActive(true);
+        if (!progressBarUI.activeSelf) progressBarUI.SetActive(true);
 
         progressBar.fillAmount = progress;
         progressBar.color = fillGradient.Evaluate(progressBar.fillAmount);

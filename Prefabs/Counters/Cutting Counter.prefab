@@ -191,6 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5058d1d12b7e1a344b7722f1a2d5fbd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inverted: 1
 --- !u!1 &5564162134257798348
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,17 +363,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46bedf8e87c178848b99eea8caf577b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  counterAnimator: {fileID: 8145510776906498014}
   counterRenderers:
   - {fileID: 3524640139560454423}
   defaultMaterial: {fileID: 592705374249410987, guid: e3d496c6436b0cf4a8eef3d8865e8639, type: 3}
   selectedMaterial: {fileID: 2100000, guid: 51edecdb7b67ea04fa7c0a02df0f14d1, type: 2}
+  counterAnimator: {fileID: 8145510776906498014}
   kitchenObjectHoldPoint: {fileID: 5289781046470651959}
   cuttingRecipes:
   - {fileID: 11400000, guid: 64457c79b0773a2408bd23968f5dabd1, type: 2}
   - {fileID: 11400000, guid: a9e6cf815c02dbe49a5965781c3efc3e, type: 2}
   - {fileID: 11400000, guid: 66c159926d182fc4e9d1ce9dcad73c7f, type: 2}
-  ProgressBarUI: {fileID: 2656592578477378566}
+  progressBarUI: {fileID: 2656592578477378566}
   progressBar: {fileID: 7402293502679531314}
   fillGradient:
     serializedVersion: 2

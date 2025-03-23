@@ -33,7 +33,6 @@ public class BaseCounter : MonoBehaviour
     }
 
     public virtual void Interact(Player player) { }
-    public virtual void Operate(Player player) { }
     public virtual void OperateStart(Player player) { }
     public virtual void OperateEnd(Player player) { }
 }

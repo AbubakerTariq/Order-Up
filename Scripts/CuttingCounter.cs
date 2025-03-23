@@ -12,16 +12,42 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private CuttingRecipeSO[] cuttingRecipes;
 
     [Space] [Header("UI")]
-    [SerializeField] private GameObject ProgressBarUI;
+    [SerializeField] private GameObject progressBarUI;
     [SerializeField] private Image progressBar;
     [SerializeField] private Gradient fillGradient;
+    
     private KitchenObject kitchenObject;
     private const string Cut = "Cut";
-    private int currentCuts = 0;
+    private float currentCuttingTime;
+    private bool operating;
 
     private void Start()
     {
-        ProgressBarUI.SetActive(false);
+        progressBarUI.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (!operating)
+            return;
+
+        KitchenObject counterObject = GetKitchenObject();
+        if (!counterObject)
+            return;
+
+        if (!IsCuttable(counterObject, out KitchenObject cutObject, out float maxCuttingTime))
+            return;
+
+        currentCuttingTime += Time.deltaTime;
+        UpdateProgressUI(currentCuttingTime / maxCuttingTime);
+
+        if (currentCuttingTime / maxCuttingTime >= 1f)
+        {
+            counterAnimator.SetBool(Cut, false);
+            progressBarUI.SetActive(false);
+            counterObject.DestroySelf();
+            KitchenObject.SpawnKitchenObject(cutObject, this);
+        }
     }
 
     public override void Interact(Player player)
@@ -32,15 +58,14 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
         if (!counterObject && playerObject && IsCuttable(playerObject))
         {
             playerObject.SetKitchenObjectParent(this);
-            currentCuts = 0;
-            progressBar.fillAmount = 0f;
+            currentCuttingTime = 0f;
         }
         else if (counterObject)
         {
             if (!playerObject)
             {
                 counterObject.SetKitchenObjectParent(player);
-                ProgressBarUI.SetActive(false);
+                progressBarUI.SetActive(false);
             }
             else if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
             {
@@ -49,21 +74,22 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
         }
     }
 
-    public override void Operate(Player player)
+    public override void OperateStart(Player player)
     {
-        if (HasKitchenObject() && IsCuttable(GetKitchenObject(), out KitchenObject cutObject, out int cutsNeeded))
-        {
-            currentCuts++;
-            UpdateProgressUI((float)currentCuts / cutsNeeded);
-            counterAnimator.SetTrigger(Cut);
+        operating = true;
+        
+        KitchenObject counterObject = GetKitchenObject();
 
-            if (currentCuts >= cutsNeeded)
-            {
-                ProgressBarUI.SetActive(false);
-                GetKitchenObject().DestroySelf();
-                KitchenObject.SpawnKitchenObject(cutObject, this);
-            }
+        if (counterObject && IsCuttable(counterObject))
+        {
+            counterAnimator.SetBool(Cut, true);
         }
+    }
+
+    public override void OperateEnd(Player player)
+    {
+        operating = false;
+        counterAnimator.SetBool(Cut, false);
     }
 
     private bool IsCuttable(KitchenObject kitchenObject)
@@ -75,31 +101,29 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
                 return true;
             }
         }
-
         return false;
     }
 
-    private bool IsCuttable(KitchenObject kitchenObject, out KitchenObject cutObject, out int numberOfCuts) {
+    private bool IsCuttable(KitchenObject kitchenObject, out KitchenObject cutObject, out float cuttingTime) {
         foreach (CuttingRecipeSO cuttingRecipe in cuttingRecipes)
         {
             if (kitchenObject.GetKitchenObjectType() == cuttingRecipe.input.GetKitchenObjectType()) {
-                numberOfCuts = cuttingRecipe.numberOfCuts;
+                cuttingTime = cuttingRecipe.cuttingTime;
                 cutObject = cuttingRecipe.output;
                 return true;
             }
         }
-        numberOfCuts = 0;
+        cuttingTime = 0f;
         cutObject = null;
         return false;
     }
 
     private void UpdateProgressUI(float progress)
     {   
-        if (!ProgressBarUI.activeSelf) ProgressBarUI.SetActive(true);
-        progressBar.DOFillAmount(progress, 0.1f).OnUpdate(() => 
-        {
-            progressBar.color = fillGradient.Evaluate(progressBar.fillAmount);
-        });
+        if (!progressBarUI.activeSelf) progressBarUI.SetActive(true);
+
+        progressBar.fillAmount = progress;
+        progressBar.color = fillGradient.Evaluate(progressBar.fillAmount);
     }
 
     public Transform GetKitchenObjectHoldPoint()

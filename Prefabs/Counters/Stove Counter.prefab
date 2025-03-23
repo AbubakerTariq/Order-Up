@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5058d1d12b7e1a344b7722f1a2d5fbd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inverted: 1
 --- !u!1 &5190543215883697956
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +460,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 728e395d9c327b04d8cdaba8ccae7b44, type: 2}
   sizzlingParticles: {fileID: 7257480658410054635}
   stoveOnVisual: {fileID: 3240539566397355106}
-  ProgressBarUI: {fileID: 2489235297122778328}
+  progressBarUI: {fileID: 2489235297122778328}
   progressBar: {fileID: 8265801962257779954}
   fillGradient:
     serializedVersion: 2

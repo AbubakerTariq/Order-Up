@@ -5,7 +5,6 @@ public class GameInput : MonoBehaviour
 {
     private PlayerInputActions playerInputActions;
     public Action OnInteract;
-    public Action OnOperate;
     public Action OnOperateStart;
     public Action OnOperateEnd;
     private bool standStillHeld;
@@ -16,7 +15,6 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Enable();
 
         playerInputActions.Player.Interact.performed += _ => OnInteract?.Invoke();
-        playerInputActions.Player.Operate.performed += _ => OnOperate?.Invoke();
         playerInputActions.Player.Operate.started += _ => OnOperateStart?.Invoke();
         playerInputActions.Player.Operate.canceled += _ => OnOperateEnd?.Invoke();
         playerInputActions.Player.StandStill.started += _ => standStillHeld = true;

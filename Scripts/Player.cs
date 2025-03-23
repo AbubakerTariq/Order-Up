@@ -21,7 +21,6 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     private void OnEnable()
     {
         gameInput.OnInteract += () => selectedCounter?.Interact(this);
-        gameInput.OnOperate += () => selectedCounter?.Operate(this);
         gameInput.OnOperateStart += () => selectedCounter?.OperateStart(this);
         gameInput.OnOperateEnd += () => selectedCounter?.OperateEnd(this);
     }
@@ -29,7 +28,6 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     private void OnDisable()
     {
         gameInput.OnInteract -= () => selectedCounter?.Interact(this);
-        gameInput.OnOperate -= () => selectedCounter?.Operate(this);
         gameInput.OnOperateStart -= () => selectedCounter?.OperateStart(this);
         gameInput.OnOperateEnd -= () => selectedCounter?.OperateEnd(this);
     }

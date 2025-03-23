@@ -12,11 +12,12 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private GameObject stoveOnVisual;
 
     [Space] [Header("UI")]
-    [SerializeField] private GameObject ProgressBarUI;
+    [SerializeField] private GameObject progressBarUI;
     [SerializeField] private Image progressBar;
     [SerializeField] private Gradient fillGradient;
+    
     private KitchenObject kitchenObject;
-    private float currentCookingTime = 0f;
+    private float currentCookingTime;
 
     private void Start()
     {
@@ -29,7 +30,7 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
         if (!counterObject)
             return;
 
-        if (!IsCookable(GetKitchenObject(), out KitchenObject cookedObject, out float maxCookingTime))
+        if (!IsCookable(counterObject, out KitchenObject cookedObject, out float maxCookingTime))
             return;
 
         currentCookingTime += Time.deltaTime;
@@ -94,7 +95,7 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
 
     private void UpdateProgressUI(float progress)
     {   
-        if (!ProgressBarUI.activeSelf) ProgressBarUI.SetActive(true);
+        if (!progressBarUI.activeSelf) progressBarUI.SetActive(true);
         if (!sizzlingParticles.activeSelf) sizzlingParticles.SetActive(true);
         if (!stoveOnVisual.activeSelf) stoveOnVisual.SetActive(true);
 
@@ -108,7 +109,7 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
         progressBar.fillAmount = 0f;
         sizzlingParticles.SetActive(false);
         stoveOnVisual.SetActive(false);
-        ProgressBarUI.SetActive(false);
+        progressBarUI.SetActive(false);
     }
 
     public Transform GetKitchenObjectHoldPoint()

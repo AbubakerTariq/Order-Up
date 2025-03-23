@@ -386,7 +386,7 @@ MonoBehaviour:
   kitchenObjectHoldPoint: {fileID: 8626941740435660216}
   plate: {fileID: 7468158815005694674, guid: 96706565f0e279b448fe4b4e12a2dc6f, type: 3}
   washTime: 3.5
-  ProgressBarUI: {fileID: 1340705006413185753}
+  progressBarUI: {fileID: 1340705006413185753}
   progressBar: {fileID: 3754915158917252947}
   fillGradient:
     serializedVersion: 2

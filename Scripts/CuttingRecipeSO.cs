@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class CuttingRecipeSO : ScriptableObject
 {
-    public int numberOfCuts;
+    public int cuttingTime;
     public KitchenObject input;
     public KitchenObject output;
 }
