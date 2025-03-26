@@ -16,6 +16,10 @@ public class Sink : BaseCounter, IKitchenObjectParent
     [SerializeField] private Image progressBar;
     [SerializeField] private Gradient fillGradient;
 
+    [Space] [Header("Audio clips")]
+    [SerializeField] private AudioClip pickSound;
+    [SerializeField] private AudioClip dropSound;
+
     private float currentWashTime;
     private bool operating;
 
@@ -54,11 +58,13 @@ public class Sink : BaseCounter, IKitchenObjectParent
 
         if (counterObject && !playerObject)
         {
+            SoundManager.PlaySound(audioSource, pickSound);
             counterObject.SetKitchenObjectParent(player);
             progressBarUI.SetActive(false);
         }
         else if (!counterObject && playerObject && playerObject.GetKitchenObjectType() == KitchenObject.KitchenObjectType.DirtyPlate)
         {
+            SoundManager.PlaySound(audioSource, dropSound);
             playerObject.SetKitchenObjectParent(this);
             currentWashTime = 0f;
         }

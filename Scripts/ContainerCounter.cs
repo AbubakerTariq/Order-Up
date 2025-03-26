@@ -8,6 +8,11 @@ public class ContainerCounter : BaseCounter, IKitchenObjectParent
     [Space] [Header("Kitchen object")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
     [SerializeField] private KitchenObject kitchenObject;
+
+    [Space] [Header("Audio clips")]
+    [SerializeField] private AudioClip pickSound;
+    [SerializeField] private AudioClip dropSound;
+    
     private const string OpenClose = "OpenClose";
 
     public override void Interact(Player player)
@@ -18,16 +23,19 @@ public class ContainerCounter : BaseCounter, IKitchenObjectParent
         if (!playerObject)
         {
             counterAnimator.SetTrigger(OpenClose);
+            SoundManager.PlaySound(audioSource, pickSound);
             KitchenObject.SpawnKitchenObject(kitchenObject, player);
         }
         else
         {
             if (playerObject.GetKitchenObjectType() == kitchenObject.GetKitchenObjectType())
             {
+                SoundManager.PlaySound(audioSource, dropSound);
                 playerObject.DestroySelf();
             }
             else if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
             {
+                SoundManager.PlaySound(audioSource, pickSound);
                 counterAnimator.SetTrigger(OpenClose);
             }
         }

@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class BaseCounter : MonoBehaviour
 {
-    [Space] [Header("Component references")]
+    [Space]
     [SerializeField] private MeshRenderer[] counterRenderers;
 
     [Space] [Header("Materials")]
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material selectedMaterial;
+
+    [Space] [Header("SFX")]
+    [SerializeField] protected AudioSource audioSource;
 
     private void Start()
     {

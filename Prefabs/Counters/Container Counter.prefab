@@ -108,6 +108,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5373801988971719026, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7906509040929231240, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
       propertyPath: m_Name
       value: Container Counter
@@ -180,17 +184,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1291405e077604e9e09ef6cffdd94d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  counterAnimator: {fileID: 8033959733350818317}
   counterRenderers:
   - {fileID: 5714118437417395570}
   - {fileID: 5924033462607219451}
   - {fileID: 2869190056743395094}
   defaultMaterial: {fileID: 592705374249410987, guid: 1ba85bfeead668d408d59b5a3f9fb434, type: 3}
   selectedMaterial: {fileID: 2100000, guid: 51edecdb7b67ea04fa7c0a02df0f14d1, type: 2}
+  audioSource: {fileID: 4244133704553477896}
+  counterAnimator: {fileID: 8033959733350818317}
   kitchenObjectHoldPoint: {fileID: 745886357474326851}
   kitchenObject: {fileID: 0}
+  pickSound: {fileID: 8300000, guid: 668de61a04ca5914aa745f8712c62720, type: 3}
+  dropSound: {fileID: 8300000, guid: 331b82ab2c0e2b74d805124d11372c85, type: 3}
 --- !u!4 &790893093711938090 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7906509040929231243, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
+  m_PrefabInstance: {fileID: 7440018057436779425}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &4244133704553477896 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6748204370966275241, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
   m_PrefabInstance: {fileID: 7440018057436779425}
   m_PrefabAsset: {fileID: 0}

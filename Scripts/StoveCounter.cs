@@ -15,6 +15,14 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private GameObject progressBarUI;
     [SerializeField] private Image progressBar;
     [SerializeField] private Gradient fillGradient;
+
+    [Space] [Header("Audio clips")]
+    [SerializeField] private AudioClip pickSound;
+    [SerializeField] private AudioClip dropSound;
+
+    [Space] [Header("Sizzle audio")]
+    [SerializeField] private AudioSource sizzleAudioSource;
+    [SerializeField] private AudioClip sizzleSound;
     
     private KitchenObject kitchenObject;
     private float currentCookingTime;
@@ -41,6 +49,11 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
             ResetCooking();
             counterObject.DestroySelf();
             KitchenObject.SpawnKitchenObject(cookedObject, this);
+
+            if (IsCookable(cookedObject))
+            {
+                SoundManager.PlayLoopSound(sizzleAudioSource, sizzleSound);
+            }
         }
     }
 
@@ -51,15 +64,19 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
 
         if (!counterObject && playerObject && IsCookable(playerObject))
         {
+            SoundManager.PlaySound(audioSource, dropSound);
+            SoundManager.PlayLoopSound(sizzleAudioSource, sizzleSound);
             playerObject.SetKitchenObjectParent(this);
         }
         else if (counterObject && !playerObject)
         {
+            SoundManager.PlaySound(audioSource, pickSound);
             counterObject.SetKitchenObjectParent(player);
             ResetCooking();
         }
         else if (counterObject && playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
         {
+            SoundManager.PlaySound(audioSource, pickSound);
             counterObject.DestroySelf();
             ResetCooking();
         }
@@ -105,6 +122,7 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
 
     private void ResetCooking()
     {
+        SoundManager.StopLoopSound(sizzleAudioSource);
         currentCookingTime = 0f;
         progressBar.fillAmount = 0f;
         sizzlingParticles.SetActive(false);

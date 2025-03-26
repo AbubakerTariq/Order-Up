@@ -69,6 +69,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5373801988971719026, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7906509040929231240, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
       propertyPath: m_Name
       value: Trash Counter
@@ -145,3 +149,10 @@ MonoBehaviour:
   - {fileID: 5583442191249480889}
   defaultMaterial: {fileID: -2364645342076739082, guid: 456aff8d8c93b494d9387cd32bd0346d, type: 3}
   selectedMaterial: {fileID: 2100000, guid: a8e783768c62e3a41aa89e79effa2042, type: 2}
+  audioSource: {fileID: 3060958892037263830}
+  trashSound: {fileID: 8300000, guid: 4b70ec0f0afb9ac4ea7dfea07aca4eb4, type: 3}
+--- !u!82 &3060958892037263830 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6748204370966275241, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
+  m_PrefabInstance: {fileID: 8636995863809013119}
+  m_PrefabAsset: {fileID: 0}

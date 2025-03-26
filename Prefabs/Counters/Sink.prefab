@@ -35,7 +35,7 @@ RectTransform:
   - {fileID: 1593064050755061912}
   - {fileID: 2314138671183727621}
   m_Father: {fileID: 8581951495866148561}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -291,6 +291,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5373801988971719026, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7861502304557722338, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -357,6 +361,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
+--- !u!82 &5118014836748669939 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6748204370966275241, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
+  m_PrefabInstance: {fileID: 1918717607724955482}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8581951495866148561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7906509040929231243, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
@@ -383,6 +392,7 @@ MonoBehaviour:
   - {fileID: 8993759033886079170}
   defaultMaterial: {fileID: -1381909053062557729, guid: b11b2e22c6391da47bec1db9290a9fea, type: 3}
   selectedMaterial: {fileID: 2100000, guid: 6a843bb5396988341b649b26e2b0fdf1, type: 2}
+  audioSource: {fileID: 5118014836748669939}
   kitchenObjectHoldPoint: {fileID: 8626941740435660216}
   plate: {fileID: 7468158815005694674, guid: 96706565f0e279b448fe4b4e12a2dc6f, type: 3}
   washTime: 3.5
@@ -417,6 +427,8 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  pickSound: {fileID: 8300000, guid: 668de61a04ca5914aa745f8712c62720, type: 3}
+  dropSound: {fileID: 8300000, guid: 331b82ab2c0e2b74d805124d11372c85, type: 3}
 --- !u!4 &8626941740435660216 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7861502304557722338, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}

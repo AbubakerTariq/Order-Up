@@ -15,10 +15,18 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private GameObject progressBarUI;
     [SerializeField] private Image progressBar;
     [SerializeField] private Gradient fillGradient;
+
+    [Space] [Header("Audio clips")]
+    [SerializeField] private AudioClip pickSound;
+    [SerializeField] private AudioClip dropSound;
+    [SerializeField] private AudioClip cutSound;
+    [SerializeField] private float cutSoundInterval = 0.2f;
     
     private KitchenObject kitchenObject;
     private const string Cut = "Cut";
     private float currentCuttingTime;
+    private float cutSoundTimer;
+    
     private bool operating;
 
     private void Start()
@@ -37,6 +45,13 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
 
         if (!IsCuttable(counterObject, out KitchenObject cutObject, out float maxCuttingTime))
             return;
+
+        cutSoundTimer -= Time.deltaTime;
+        if (cutSoundTimer <= 0f)
+        {
+            cutSoundTimer = cutSoundInterval;
+            SoundManager.PlaySound(audioSource, cutSound);
+        }
 
         currentCuttingTime += Time.deltaTime;
         UpdateProgressUI(currentCuttingTime / maxCuttingTime);
@@ -57,6 +72,7 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
 
         if (!counterObject && playerObject && IsCuttable(playerObject))
         {
+            SoundManager.PlaySound(audioSource, dropSound);
             playerObject.SetKitchenObjectParent(this);
             currentCuttingTime = 0f;
         }
@@ -64,11 +80,13 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
         {
             if (!playerObject)
             {
+                SoundManager.PlaySound(audioSource, pickSound);
                 counterObject.SetKitchenObjectParent(player);
                 progressBarUI.SetActive(false);
             }
             else if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
             {
+                SoundManager.PlaySound(audioSource, pickSound);
                 counterObject.DestroySelf();
             }
         }

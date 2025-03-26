@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4690483870454031076}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &5169733415903334198
 MeshFilter:
@@ -105,6 +105,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5373801988971719026, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7906509040929231240, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
       propertyPath: m_Name
       value: Delivery Counter
@@ -181,7 +185,15 @@ MonoBehaviour:
   - {fileID: 4692107744896796382}
   defaultMaterial: {fileID: 2100000, guid: ddeee0face48cd346be478cda5ba7071, type: 2}
   selectedMaterial: {fileID: 2100000, guid: 62438ef9d766d5d44b24ca49aaac5b6f, type: 2}
+  audioSource: {fileID: 8144779926255572934}
   dirtyPlate: {fileID: 5180084764785417364, guid: 2d5a3b4587971d146a204de63bc07d45, type: 3}
+  failSound: {fileID: 8300000, guid: 400611abd7434234993616a86c030d1e, type: 3}
+  successSound: {fileID: 8300000, guid: 4b22bfbdbacfa0445bc9bbfbb0141085, type: 3}
+--- !u!82 &8144779926255572934 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6748204370966275241, guid: f7af1c40ee16df143a5f04a1c20531f9, type: 3}
+  m_PrefabInstance: {fileID: 3219618740121170799}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7844827952400085170
 PrefabInstance:
   m_ObjectHideFlags: 0

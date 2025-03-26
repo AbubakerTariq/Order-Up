@@ -10,6 +10,11 @@ public class PlatesCounter : BaseCounter
     [SerializeField] private PlateKitchenObject plateKitchenObject;
     [SerializeField] private Transform plateVisualPrefab;
     [SerializeField] private int maxPlates = 8;
+
+    [Space] [Header("Audio clips")]
+    [SerializeField] private AudioClip pickSound;
+    [SerializeField] private AudioClip dropSound;
+
     private List<GameObject> plateVisualList = new();
     private float plateVisualOffset = 0.15f;
 
@@ -27,11 +32,13 @@ public class PlatesCounter : BaseCounter
 
         if (playerObject is PlateKitchenObject plate && plate.IsEmpty() && plateVisualList.Count < maxPlates)
         {
+            SoundManager.PlaySound(audioSource, dropSound);
             playerObject.DestroySelf();
             AddPlate();
         }
         else if (!playerObject && plateVisualList.Count > 0)
         {
+            SoundManager.PlaySound(audioSource, pickSound);
             KitchenObject.SpawnKitchenObject(plateKitchenObject, player);
             RemovePlate();
         }
@@ -40,6 +47,7 @@ public class PlatesCounter : BaseCounter
             PlateKitchenObject newPlate = Instantiate(plateKitchenObject);
             if (newPlate.TryAddingIngredient(playerObject))
             {
+                SoundManager.PlaySound(audioSource, pickSound);
                 playerObject.DestroySelf();
                 newPlate.SetKitchenObjectParent(player);
                 RemovePlate();
