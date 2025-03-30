@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 
 public class CuttingCounter : BaseCounter, IKitchenObjectParent
 {
@@ -8,7 +7,6 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private Animator counterAnimator;
 
     [Space] [Header("Kitchen object")]
-    [SerializeField] private Transform kitchenObjectHoldPoint;
     [SerializeField] private CuttingRecipeSO[] cuttingRecipes;
 
     [Space] [Header("UI")]
@@ -16,9 +14,7 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private Image progressBar;
     [SerializeField] private Gradient fillGradient;
 
-    [Space] [Header("Audio clips")]
-    [SerializeField] private AudioClip pickSound;
-    [SerializeField] private AudioClip dropSound;
+    [Space] [Header("Additional SFX")]
     [SerializeField] private AudioClip cutSound;
     [SerializeField] private float cutSoundInterval = 0.2f;
     
@@ -72,7 +68,6 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
 
         if (!counterObject && playerObject && IsCuttable(playerObject))
         {
-            SoundManager.PlaySound(audioSource, dropSound);
             playerObject.SetKitchenObjectParent(this);
             currentCuttingTime = 0f;
         }
@@ -80,13 +75,11 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
         {
             if (!playerObject)
             {
-                SoundManager.PlaySound(audioSource, pickSound);
                 counterObject.SetKitchenObjectParent(player);
                 progressBarUI.SetActive(false);
             }
             else if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
             {
-                SoundManager.PlaySound(audioSource, pickSound);
                 counterObject.DestroySelf();
             }
         }
@@ -152,6 +145,11 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+
+        if (this.kitchenObject != null)
+        {
+            SoundManager.PlaySound(audioSource, dropSound);
+        }
     }
 
     public KitchenObject GetKitchenObject()

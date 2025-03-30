@@ -1,68 +1,35 @@
 using UnityEngine;
 
-public class ContainerCounter : BaseCounter, IKitchenObjectParent
+public class ContainerCounter : BaseCounter
 {
     [Space] [Header("Animator")]
     [SerializeField] private Animator counterAnimator;
     
     [Space] [Header("Kitchen object")]
-    [SerializeField] private Transform kitchenObjectHoldPoint;
-    [SerializeField] private KitchenObject kitchenObject;
-
-    [Space] [Header("Audio clips")]
-    [SerializeField] private AudioClip pickSound;
-    [SerializeField] private AudioClip dropSound;
+    [SerializeField] private KitchenObject kitchenObjectToSpawn;
     
     private const string OpenClose = "OpenClose";
 
     public override void Interact(Player player)
     {
-        KitchenObject counterObject = GetKitchenObject();
         KitchenObject playerObject = player.GetKitchenObject();
 
         if (!playerObject)
         {
             counterAnimator.SetTrigger(OpenClose);
-            SoundManager.PlaySound(audioSource, pickSound);
-            KitchenObject.SpawnKitchenObject(kitchenObject, player);
+            KitchenObject.SpawnKitchenObject(kitchenObjectToSpawn, player);
         }
         else
         {
-            if (playerObject.GetKitchenObjectType() == kitchenObject.GetKitchenObjectType())
+            if (playerObject.GetKitchenObjectType() == kitchenObjectToSpawn.GetKitchenObjectType())
             {
                 SoundManager.PlaySound(audioSource, dropSound);
                 playerObject.DestroySelf();
             }
-            else if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
+            else if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(kitchenObjectToSpawn))
             {
-                SoundManager.PlaySound(audioSource, pickSound);
                 counterAnimator.SetTrigger(OpenClose);
             }
         }
-    }
-
-    public Transform GetKitchenObjectHoldPoint()
-    {
-        return kitchenObjectHoldPoint;
-    }
-
-    public void SetKitchenObject(KitchenObject kitchenObject)
-    {
-        this.kitchenObject = kitchenObject;
-    }
-
-    public KitchenObject GetKitchenObject()
-    {
-        return kitchenObject;
-    }
-
-    public void ClearKitchenObject()
-    {
-        kitchenObject = null;
-    }
-
-    public bool HasKitchenObject()
-    {
-        return kitchenObject != null;
     }
 }

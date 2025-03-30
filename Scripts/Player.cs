@@ -14,6 +14,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     [Space] [Header("Kitchen object related")]
     [SerializeField] private Transform kitchenObjectHoldPoint;
+
+    [Space] [Header("SFX")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip pickSound;
     
     private KitchenObject kitchenObject;
     private BaseCounter selectedCounter;
@@ -91,6 +95,11 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+
+        if (this.kitchenObject != null)
+        {
+            SoundManager.PlaySound(audioSource, pickSound);
+        }
     }
 
     public KitchenObject GetKitchenObject()

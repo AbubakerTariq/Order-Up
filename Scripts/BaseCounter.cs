@@ -11,6 +11,10 @@ public class BaseCounter : MonoBehaviour
 
     [Space] [Header("SFX")]
     [SerializeField] protected AudioSource audioSource;
+    [SerializeField] protected AudioClip dropSound;
+
+    [Space] [Header("Kitchen object")]
+    [SerializeField] protected Transform kitchenObjectHoldPoint;
 
     private void Start()
     {

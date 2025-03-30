@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class Sink : BaseCounter, IKitchenObjectParent
 {
     [Space] [Header("Kitchen object")]
-    [SerializeField] private Transform kitchenObjectHoldPoint;
     [SerializeField] private PlateKitchenObject plate;
     private KitchenObject kitchenObject;
 
@@ -15,10 +14,6 @@ public class Sink : BaseCounter, IKitchenObjectParent
     [SerializeField] private GameObject progressBarUI;
     [SerializeField] private Image progressBar;
     [SerializeField] private Gradient fillGradient;
-
-    [Space] [Header("Audio clips")]
-    [SerializeField] private AudioClip pickSound;
-    [SerializeField] private AudioClip dropSound;
 
     private float currentWashTime;
     private bool operating;
@@ -58,13 +53,11 @@ public class Sink : BaseCounter, IKitchenObjectParent
 
         if (counterObject && !playerObject)
         {
-            SoundManager.PlaySound(audioSource, pickSound);
             counterObject.SetKitchenObjectParent(player);
             progressBarUI.SetActive(false);
         }
         else if (!counterObject && playerObject && playerObject.GetKitchenObjectType() == KitchenObject.KitchenObjectType.DirtyPlate)
         {
-            SoundManager.PlaySound(audioSource, dropSound);
             playerObject.SetKitchenObjectParent(this);
             currentWashTime = 0f;
         }
@@ -96,6 +89,11 @@ public class Sink : BaseCounter, IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+
+        if (this.kitchenObject != null)
+        {
+            SoundManager.PlaySound(audioSource, dropSound);
+        }
     }
 
     public KitchenObject GetKitchenObject()

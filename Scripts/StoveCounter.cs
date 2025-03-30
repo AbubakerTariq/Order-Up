@@ -3,8 +3,7 @@ using UnityEngine.UI;
 
 public class StoveCounter : BaseCounter, IKitchenObjectParent
 {
-    [Space] [Header("Kitchen object")]
-    [SerializeField] private Transform kitchenObjectHoldPoint;
+    [Space]
     [SerializeField] private CookingRecipeSO[] cookingRecipes;
 
     [Space] [Header("VFX objects")]
@@ -15,10 +14,6 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
     [SerializeField] private GameObject progressBarUI;
     [SerializeField] private Image progressBar;
     [SerializeField] private Gradient fillGradient;
-
-    [Space] [Header("Audio clips")]
-    [SerializeField] private AudioClip pickSound;
-    [SerializeField] private AudioClip dropSound;
 
     [Space] [Header("Sizzle audio")]
     [SerializeField] private AudioSource sizzleAudioSource;
@@ -64,19 +59,16 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
 
         if (!counterObject && playerObject && IsCookable(playerObject))
         {
-            SoundManager.PlaySound(audioSource, dropSound);
             SoundManager.PlayLoopSound(sizzleAudioSource, sizzleSound);
             playerObject.SetKitchenObjectParent(this);
         }
         else if (counterObject && !playerObject)
         {
-            SoundManager.PlaySound(audioSource, pickSound);
             counterObject.SetKitchenObjectParent(player);
             ResetCooking();
         }
         else if (counterObject && playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
         {
-            SoundManager.PlaySound(audioSource, pickSound);
             counterObject.DestroySelf();
             ResetCooking();
         }
@@ -138,6 +130,11 @@ public class StoveCounter : BaseCounter, IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+
+        if (this.kitchenObject != null)
+        {
+            SoundManager.PlaySound(audioSource, dropSound);
+        }
     }
 
     public KitchenObject GetKitchenObject()

@@ -2,13 +2,7 @@ using UnityEngine;
 
 public class ClearCounter : BaseCounter, IKitchenObjectParent
 {
-    [Space] [Header("Kitchen object")]
-    [SerializeField] private Transform kitchenObjectHoldPoint;
     private KitchenObject kitchenObject;
-
-    [Space] [Header("Audio clips")]
-    [SerializeField] private AudioClip pickSound;
-    [SerializeField] private AudioClip dropSound;
 
     public override void Interact(Player player)
     {
@@ -17,24 +11,20 @@ public class ClearCounter : BaseCounter, IKitchenObjectParent
 
         if (counterObject && !playerObject)
         {
-            SoundManager.PlaySound(audioSource, pickSound);
             counterObject.SetKitchenObjectParent(player);
         }
         else if (!counterObject && playerObject)
         {
-            SoundManager.PlaySound(audioSource, dropSound);
             playerObject.SetKitchenObjectParent(this);
         }
         else if (counterObject && playerObject)
         {
             if (playerObject is PlateKitchenObject plate && plate.TryAddingIngredient(counterObject))
             {
-                SoundManager.PlaySound(audioSource, pickSound);
                 counterObject.DestroySelf();
             }
             else if (counterObject is PlateKitchenObject counterPlate && counterPlate.TryAddingIngredient(playerObject))
             {
-                SoundManager.PlaySound(audioSource, dropSound);
                 playerObject.DestroySelf();
             }
         }
@@ -48,6 +38,11 @@ public class ClearCounter : BaseCounter, IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+
+        if (this.kitchenObject != null)
+        {
+            SoundManager.PlaySound(audioSource, dropSound);
+        }
     }
 
     public KitchenObject GetKitchenObject()

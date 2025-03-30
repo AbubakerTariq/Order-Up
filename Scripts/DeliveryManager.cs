@@ -10,7 +10,6 @@ public class DeliveryManager : MonoBehaviour
     [Space] [Header("Configurations")]
     [SerializeField] private float orderWaitTimeMin = 5f;
     [SerializeField] private float orderWaitTimeMax = 10f;
-    [SerializeField] private float timePerOrder = 25f;
     [SerializeField] private int maxOrders = 5;
 
     [Space] [Header("UI")]
